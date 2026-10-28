@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp, getField, getZone } from '../context/AppContext.jsx';
 import FieldMap from '../components/FieldMap.jsx';
@@ -13,6 +13,7 @@ export default function MapPage() {
   const navigate = useNavigate();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetExpanded, setSheetExpanded] = useState(false);
+  const dragRef = useRef({ startY: 0, isDragging: false });
 
   const field = getField(state.fields, state.fieldId);
   const zone = getZone(field, state.zoneId);
@@ -32,6 +33,38 @@ export default function MapPage() {
 
   function goToPest() {
     navigate('/pest');
+  }
+
+  function onHandleTouchStart(e) {
+    dragRef.current = { startY: e.touches[0].clientY, isDragging: true };
+  }
+  function onHandleTouchEnd(e) {
+    if (!dragRef.current.isDragging) return;
+    const dy = dragRef.current.startY - e.changedTouches[0].clientY;
+    dragRef.current.isDragging = false;
+    if (Math.abs(dy) < 8) {
+      setSheetExpanded((v) => !v);
+    } else if (dy > 0) {
+      setSheetExpanded(true);
+    } else {
+      setSheetExpanded(false);
+    }
+  }
+  function onHandleMouseDown(e) {
+    dragRef.current = { startY: e.clientY, isDragging: true };
+    const onUp = (ev) => {
+      const dy = dragRef.current.startY - ev.clientY;
+      dragRef.current.isDragging = false;
+      window.removeEventListener('mouseup', onUp);
+      if (Math.abs(dy) < 8) {
+        setSheetExpanded((v) => !v);
+      } else if (dy > 0) {
+        setSheetExpanded(true);
+      } else {
+        setSheetExpanded(false);
+      }
+    };
+    window.addEventListener('mouseup', onUp);
   }
 
   function viewDrug(drugId) {
@@ -54,7 +87,7 @@ export default function MapPage() {
     <div className="page map-page">
       {/* 상단 바 */}
       <header className="topbar map-topbar">
-        <div className="tb-left">
+        <div className="tb-left" style={{ cursor: 'pointer' }} onClick={() => navigate('/dashboard')} role="button" aria-label="대시보드 보기">
           <span className="tb-logo">FG</span>
           <div className="tb-center">
             <span className="tb-field">{field?.name ?? '밭 선택 안 됨'}</span>
@@ -107,7 +140,13 @@ export default function MapPage() {
       {/* 구역 바텀시트 */}
       {sheetOpen && zone && (
         <div className={`bottom-sheet open${sheetExpanded ? ' expanded' : ''}`}>
-          <div className="bs-handle" onClick={() => setSheetExpanded((v) => !v)} />
+          <div
+            className="bs-handle"
+            onTouchStart={onHandleTouchStart}
+            onTouchEnd={onHandleTouchEnd}
+            onMouseDown={onHandleMouseDown}
+            style={{ cursor: 'grab', touchAction: 'none' }}
+          />
           <div className="bs-inner">
             <div className="bs-header">
               <h2 className="bs-title">{zone.name}</h2>

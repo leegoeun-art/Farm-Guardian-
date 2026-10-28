@@ -55,7 +55,15 @@ export default function PestPage() {
           ←
         </button>
         <h1 className="tb-title">해충 선택</h1>
-        <div style={{ width: 40 }} />
+        <button
+          className="tb-icon-btn"
+          onClick={() => navigate('/vector')}
+          aria-label="매개충 안내"
+          title="매개충 안내"
+          style={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', color: 'var(--warn)', cursor: 'pointer', fontSize: 18 }}
+        >
+          ⚠
+        </button>
       </header>
 
       {/* 검색 */}

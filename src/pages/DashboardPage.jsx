@@ -4,6 +4,13 @@ import { DRUGS, TODAY } from '../data/seed.js';
 import { judge, fmtDate, VERDICT_LABEL } from '../data/verdictEngine.js';
 import Chip from '../components/Chip.jsx';
 
+const BN_ICONS = {
+  map: <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17L8 7l5 5 4-7"/><circle cx="8" cy="7" r="1.2" fill="currentColor" stroke="none"/><circle cx="13" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>,
+  pest: <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4 C11 4 6 8 6 13 C6 16.3 8.2 19 11 19 C13.8 19 16 16.3 16 13 C16 8 11 4 11 4Z"/><path d="M11 9 L11 19"/><path d="M9 13 C9 13 10 11.5 11 12.5"/></svg>,
+  verdict: <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 3 L4 6V11C4 15.4 7 18.8 11 20C15 18.8 18 15.4 18 11V6L11 3Z"/><path d="M8 11l2 2 4-4"/></svg>,
+  records: <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="4" width="12" height="15" rx="2"/><path d="M8 8h6M8 11h6M8 14h4"/><path d="M9 4V3a2 2 0 0 1 4 0v1"/></svg>,
+};
+
 export default function DashboardPage() {
   const { state } = useApp();
   const navigate = useNavigate();
@@ -54,6 +61,21 @@ export default function DashboardPage() {
           <button className="btn" onClick={() => navigate('/records')}>이력 관리</button>
         </div>
       </div>
+
+      <nav className="bottom-nav">
+        <button className="bn-item active">
+          {BN_ICONS.map}<span>지도</span>
+        </button>
+        <button className="bn-item" onClick={() => navigate('/pest')}>
+          {BN_ICONS.pest}<span>해충</span>
+        </button>
+        <button className="bn-item" onClick={() => navigate('/verdict')}>
+          {BN_ICONS.verdict}<span>판단</span>
+        </button>
+        <button className="bn-item" onClick={() => navigate('/records')}>
+          {BN_ICONS.records}<span>이력</span>
+        </button>
+      </nav>
     </div>
   );
 }
