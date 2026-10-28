@@ -1,0 +1,1590 @@
+<title>팜가디언 화면 시안</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Hallmark · shape: app screen · tone: plain, field-use · anchor hue: 225 · surface: paper */
+/* Hallmark · waive 39b · the drug tiles carry a name, a product line and a verdict chip · they are cards a gloved hand taps in the field, not toolbar controls */
+/* Hallmark · pre-emit critique: P5 H3 E5 S4 R5 V3 · weakest: V, the chrome is kept plain on purpose so the four checks and their source text carry the screen */
+:root{
+  --app:#ffffff; --sheet:#ffffff; --sunken:#f3f5f8; --page:#e9edf2;
+  --ink:#14171c; --ink-2:#626c7a; --ink-3:#8b95a3; --line:#dfe4ea;
+  --accent:#1f4fd8;
+  --ok:#0d6b57; --ok-bg:#d9f0e8; --warn:#8a5a00; --warn-bg:#fcefd0;
+  --bad:#ab2a30; --bad-bg:#fbe1e2; --unk:#4d5663; --unk-bg:#e3e7ed;
+  --m-bg:#49603f; --m-1:#5c7450; --m-2:#6e8460; --m-3:#879a6f;
+  --m-4:#a7ab7c; --m-5:#42553c; --m-6:#7b8f66; --m-edge:#f2f4ee;
+  --on-accent:#f6f8ff;
+  --scrim:rgba(10,13,18,.42);
+  --map-ink:#fdfdfb; --map-halo:rgba(16,20,14,.5);
+  --shadow:0 -1px 0 rgba(20,23,28,.07),0 -12px 28px rgba(20,23,28,.13);
+  --lift-1:0 1px 3px rgba(20,23,28,.14);
+  --lift-2:0 2px 10px rgba(20,23,28,.14);
+  --lift-3:0 2px 6px rgba(20,23,28,.08),0 18px 50px rgba(20,23,28,.14);
+  --f:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --app:#0e1115; --sheet:#171b21; --sunken:#1e232a; --page:#07090c;
+  --ink:#e9edf2; --ink-2:#9aa4b2; --ink-3:#6f7987; --line:#2b323b;
+  --accent:#7fa2f5;
+  --ok:#5fd3b2; --ok-bg:#113128; --warn:#f0c164; --warn-bg:#33280f;
+  --bad:#f09097; --bad-bg:#3a1b1e; --unk:#a8b2c0; --unk-bg:#232932;
+  --m-bg:#26321f; --m-1:#31412a; --m-2:#3b4b31; --m-3:#49573a;
+  --m-4:#5c5f43; --m-5:#222c1d; --m-6:#425035; --m-edge:#aab49c;
+  --on-accent:#0b1020;
+  --scrim:rgba(4,6,10,.62);
+  --map-ink:#eef1e6; --map-halo:rgba(0,0,0,.55);
+  --shadow:0 -1px 0 rgba(0,0,0,.5),0 -12px 28px rgba(0,0,0,.45);
+  --lift-1:0 1px 3px rgba(0,0,0,.5);
+  --lift-2:0 2px 10px rgba(0,0,0,.5);
+  --lift-3:0 2px 6px rgba(0,0,0,.4),0 18px 50px rgba(0,0,0,.5);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --app:#0e1115; --sheet:#171b21; --sunken:#1e232a; --page:#07090c;
+  --ink:#e9edf2; --ink-2:#9aa4b2; --ink-3:#6f7987; --line:#2b323b;
+  --accent:#7fa2f5;
+  --ok:#5fd3b2; --ok-bg:#113128; --warn:#f0c164; --warn-bg:#33280f;
+  --bad:#f09097; --bad-bg:#3a1b1e; --unk:#a8b2c0; --unk-bg:#232932;
+  --m-bg:#26321f; --m-1:#31412a; --m-2:#3b4b31; --m-3:#49573a;
+  --m-4:#5c5f43; --m-5:#222c1d; --m-6:#425035; --m-edge:#aab49c;
+  --on-accent:#0b1020;
+  --scrim:rgba(4,6,10,.62);
+  --map-ink:#eef1e6; --map-halo:rgba(0,0,0,.55);
+  --shadow:0 -1px 0 rgba(0,0,0,.5),0 -12px 28px rgba(0,0,0,.45);
+  --lift-1:0 1px 3px rgba(0,0,0,.5);
+  --lift-2:0 2px 10px rgba(0,0,0,.5);
+  --lift-3:0 2px 6px rgba(0,0,0,.4),0 18px 50px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;width:100%;overflow-x:clip}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--f);font-size:15px;
+  line-height:1.5;-webkit-text-size-adjust:100%;display:flex;flex-direction:column}
+.switch{flex:none;background:var(--app);border-bottom:1px solid var(--line);
+  padding:8px max(16px,env(safe-area-inset-left,0px)) 8px max(16px,env(safe-area-inset-right,0px));
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.tabs{display:flex;gap:4px;background:var(--sunken);border-radius:9px;padding:4px;flex:none}
+.tabs button{appearance:none;cursor:pointer;border:0;background:none;color:var(--ink-2);
+  font:600 13px/1 var(--f);padding:8px 12px;border-radius:7px;white-space:nowrap}
+.tabs button:active{color:var(--ink)}
+.tabs button[aria-current="true"]{background:var(--app);color:var(--ink);box-shadow:var(--lift-1)}
+.thesis{font-size:12.5px;color:var(--ink-2);min-width:0;flex:1}
+@media (max-width:720px){.thesis{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;font-size:11.5px;line-height:1.4}}
+.thesis b{color:var(--ink);font-weight:600}
+.stage{flex:1;min-height:0;display:grid;place-items:center;overflow:auto;
+  padding:12px max(12px,env(safe-area-inset-left,0px)) 12px max(12px,env(safe-area-inset-right,0px))}
+.stage.wide{place-items:stretch;padding:0}
+.app{width:100%;max-width:392px;height:min(780px,100%);position:relative;overflow:hidden;
+  background:var(--app);border:1px solid var(--line);border-radius:18px}
+@media (max-width:420px){.stage{padding:0}.app{height:100%;border:0;border-radius:0}}
+
+#map{position:absolute;inset:0}
+#map svg{width:100%;height:100%;display:block}
+.z-lbl{font:600 13px/1 var(--f);fill:var(--map-ink);paint-order:stroke;stroke:var(--map-halo);stroke-width:3px}
+.z-sub{font:500 10.5px/1 var(--f);fill:var(--map-ink);opacity:.9;paint-order:stroke;stroke:var(--map-halo);stroke-width:3px}
+.topbar{position:absolute;top:0;left:0;right:0;padding:12px;display:flex;gap:8px;align-items:flex-start}
+.pill{background:var(--sheet);border:1px solid var(--line);border-radius:11px;padding:8px 12px;
+  box-shadow:var(--lift-2);min-width:0;text-align:left;cursor:pointer;
+  appearance:none;color:var(--ink);font-family:var(--f)}
+.pill .t{font-weight:600;font-size:14px;line-height:1.25}
+.pill .s{font:500 11.5px/1.3 var(--f);color:var(--ink-2)}
+.iconbtn{appearance:none;cursor:pointer;flex:none;width:38px;height:38px;border-radius:11px;
+  background:var(--sheet);border:1px solid var(--line);color:var(--ink);
+  box-shadow:var(--lift-2);display:grid;place-items:center;font:600 11px/1 var(--fm)}
+.iconbtn svg{width:18px;height:18px}
+.iconbtn:hover{border-color:var(--accent);color:var(--accent)}
+.iconbtn:active{background:var(--sunken)}
+.spacer{flex:1}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--sheet);border-radius:18px 18px 0 0;
+  box-shadow:var(--shadow);padding:8px 16px calc(16px + env(safe-area-inset-bottom,0px));
+  display:grid;gap:8px;max-height:52%;overflow:auto}
+.grab{width:34px;height:4px;border-radius:2px;background:var(--line);justify-self:center;margin-bottom:2px}
+.sh{display:flex;align-items:baseline;gap:8px}
+.sh h2{margin:0;font-size:17px;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.sh .m{font:500 12px/1 var(--f);color:var(--ink-2)}
+.bars{display:grid;gap:4px}
+.bar{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+.track{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.pct{font:500 12px/1 var(--f);color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+.moa{display:inline-flex;border:1.4px solid currentColor;border-radius:3px;overflow:hidden;
+  vertical-align:-3px;flex:none}
+.moa .kr{font:600 11.5px/1 var(--f);padding:4px 8px;white-space:nowrap}
+.moa .in{font:500 11px/1 var(--fm);padding:4px;border-left:1.5px solid currentColor;
+  opacity:.8;display:flex;align-items:center}
+.btn{appearance:none;cursor:pointer;width:100%;font:600 15px/1 var(--f);padding:12px;border-radius:11px;
+  border:1px solid var(--accent);background:var(--accent);color:var(--on-accent)}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px);filter:brightness(.94)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;filter:none}
+.btn.ghost{background:none;color:var(--accent)}
+.empty{font-size:13px;color:var(--ink-2);background:var(--sunken);border-radius:9px;padding:12px;
+  border:1px dashed var(--line)}
+.chip{font:700 11px/1 var(--f);padding:4px 8px;border-radius:5px;white-space:nowrap}
+.chip.GREEN{background:var(--ok-bg);color:var(--ok)}
+.chip.AMBER{background:var(--warn-bg);color:var(--warn)}
+.chip.RED{background:var(--bad-bg);color:var(--bad)}
+.chip.NA{background:var(--unk-bg);color:var(--unk)}
+.chip.UNKNOWN{color:var(--unk);outline:1.5px dashed currentColor;outline-offset:-2px;
+  background:repeating-linear-gradient(135deg,transparent 0 4px,var(--unk-bg) 4px 8px)}
+.evid{font-family:var(--fm);font-size:11px;background:var(--app);border:1px solid var(--line);
+  border-radius:7px;padding:8px 8px;color:var(--ink-2);display:grid;gap:2px}
+.evid b{color:var(--ink);font-weight:500}
+table.ing{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+table.ing th,table.ing td{padding:4px 4px;text-align:right;border-bottom:1px solid var(--line)}
+table.ing th{font:500 11px/1.3 var(--f);color:var(--ink-2)}
+table.ing th:first-child,table.ing td:first-child{text-align:left}
+table.ing tr:last-child td{border-bottom:0}
+table.ing td.out{color:var(--bad);font-weight:600}
+.flow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--ink-3);font-size:11.5px}
+.sec{font:600 12.5px/1 var(--f);color:var(--ink-2);margin-top:4px}
+.toast{background:var(--ok-bg);color:var(--ok);border-radius:11px;padding:12px;font-size:13.5px;
+  font-weight:600;text-align:center}
+.note{font-size:11px;color:var(--ink-3);text-align:center}
+.alt{display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:center;background:var(--sunken);
+  border:1px solid var(--line);border-radius:11px;padding:12px 12px}
+.alt .n{font-weight:600;font-size:14.5px}
+.alt .w{grid-column:1;font-size:11.5px;color:var(--ink-2)}
+.alt .r{grid-row:1/3;grid-column:2;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+
+.panel{position:absolute;inset:0;background:var(--app);color:var(--ink);display:flex;flex-direction:column}
+.phead{display:flex;align-items:center;gap:8px;padding:12px 12px;border-bottom:1px solid var(--line);
+  flex:none;background:var(--sheet)}
+.phead button{appearance:none;background:none;border:0;cursor:pointer;color:var(--accent);
+  font:600 14px/1 var(--f);padding:8px;margin-left:-8px;border-radius:7px}
+.phead button:hover{background:var(--sunken)}
+.phead h2{margin:0;font-size:15.5px;font-weight:600;flex:1;min-width:0;letter-spacing:-.01em;text-wrap:balance;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbody{flex:1;overflow:auto;padding:12px;display:grid;gap:12px;align-content:start;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.pfoot{flex:none;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));
+  border-top:1px solid var(--line);background:var(--sheet)}
+
+.pest{appearance:none;cursor:pointer;text-align:left;width:100%;font-family:var(--f);color:var(--ink);
+  background:var(--sunken);border:1px solid var(--line);border-radius:12px;padding:8px 12px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;align-items:center}
+.pest:hover{border-color:var(--accent)}
+.pest:active{background:var(--line)}
+.pest .ico{grid-row:1/3;width:40px;height:40px;border-radius:9px;display:block}
+.pest .n{font-weight:600;font-size:14.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pest .s{grid-column:2;font-size:11px;color:var(--ink-3);min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.pest .r{grid-row:1/3;grid-column:3;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.tag{font:500 11px/1 var(--f);padding:4px 8px;border-radius:4px;background:var(--line);color:var(--ink-2);
+  white-space:nowrap}
+.tag.alert{background:var(--warn-bg);color:var(--warn);font-weight:600}
+.tag.no{background:none;border:1px dashed var(--line);color:var(--ink-3)}
+.drug{appearance:none;cursor:pointer;text-align:left;width:100%;font-family:var(--f);color:var(--ink);
+  background:var(--sunken);border:1px solid var(--line);border-radius:12px;padding:12px;
+  display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center}
+.drug:hover{border-color:var(--accent)}
+.drug:active{background:var(--line)}
+.drug .b{font-weight:600;font-size:15.5px}
+.drug .p{font-size:11px;color:var(--ink-3);grid-column:1;line-height:1.35}
+.drug .r{grid-row:1/3;grid-column:2;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.drug .w{grid-column:1/-1;font-size:12px;color:var(--ink-2);margin-top:8px;padding-top:8px;
+  border-top:1px dashed var(--line)}
+.vbox{border-radius:12px;padding:12px;display:grid;gap:4px;border:1px solid var(--line);background:var(--sunken)}
+.vbox.GREEN{background:var(--ok-bg);border-color:transparent}
+.vbox.AMBER{background:var(--warn-bg);border-color:transparent}
+.vbox.RED{background:var(--bad-bg);border-color:transparent}
+.vbox.UNKNOWN{background:repeating-linear-gradient(135deg,transparent 0 5px,var(--unk-bg) 5px 10px);
+  border-style:dashed}
+.vbox .vt{font-size:19px;font-weight:700;letter-spacing:-.015em}
+.vbox.GREEN .vt{color:var(--ok)}.vbox.AMBER .vt{color:var(--warn)}
+.vbox.RED .vt{color:var(--bad)}.vbox.UNKNOWN .vt{color:var(--unk)}
+.vbox .vs{font-size:12px;color:var(--ink-2)}
+.check{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--sunken)}
+.check>summary{cursor:pointer;list-style:none;padding:12px 12px;display:grid;
+  grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+.check>summary::-webkit-details-marker{display:none}
+.check .no{font:700 11px/1 var(--fm);width:20px;height:20px;border-radius:50%;display:grid;
+  place-items:center;background:var(--line);color:var(--ink-2)}
+.check .tt{min-width:0}
+.check .tt b{font-weight:600;font-size:13.5px;display:block}
+.check .tt span{color:var(--ink-2);font-size:12px;display:block;margin-top:2px}
+.check .bd{padding:12px 12px 12px;border-top:1px dashed var(--line);font-size:12.5px;display:grid;gap:8px}
+.cases{display:grid;gap:8px}
+.case{appearance:none;cursor:pointer;text-align:left;font-family:var(--f);color:var(--ink);
+  background:var(--sunken);border:1px solid var(--line);border-radius:10px;padding:8px 12px;
+  display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:center}
+.case:hover{border-color:var(--accent)}
+.case:active{background:var(--line)}
+.case .cn{font-weight:600;font-size:13.5px}
+.case .cd{grid-column:1;font-size:11px;color:var(--ink-2)}
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.seg{display:flex;gap:4px;background:var(--sunken);border-radius:9px;padding:4px}
+.seg button{flex:1;appearance:none;cursor:pointer;border:0;background:none;color:var(--ink-2);
+  font:600 12.5px/1 var(--f);padding:8px 4px;border-radius:7px;display:grid;gap:4px;justify-items:center}
+.seg button[aria-current="true"]{background:var(--app);color:var(--ink);box-shadow:var(--lift-1)}
+.seg .zs{font:500 10.5px/1 var(--f);color:var(--ink-3)}
+.bwrap{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--app)}
+.bhead{flex:none;background:var(--sheet);border-bottom:1px solid var(--line);padding:12px 12px 12px;
+  display:grid;gap:8px}
+.bhead .r1{display:flex;align-items:center;gap:8px}
+.bhead .r1 .t{font-weight:700;font-size:15.5px;flex:1;min-width:0}
+.bhead .r1 .back{appearance:none;background:none;border:0;cursor:pointer;color:var(--accent);
+  font:600 14px/1 var(--f);padding:4px 8px;margin-left:-8px;border-radius:7px}
+.bbody{flex:1;overflow:auto;padding:12px;display:grid;gap:12px;align-content:start;
+  padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{appearance:none;cursor:pointer;text-align:left;font-family:var(--f);color:var(--ink);
+  background:var(--sunken);border:1px solid var(--line);border-radius:12px;padding:12px;
+  display:grid;gap:4px;align-content:start}
+.tile:hover{border-color:var(--accent)}
+.tile:active{background:var(--line)}
+.tile .n{font-weight:600;font-size:15px}
+.tile .i{font-size:11px;color:var(--ink-2);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tile .f{display:flex;gap:4px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:2px}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cell{appearance:none;cursor:pointer;font-family:var(--f);border:1px solid transparent;border-radius:10px;
+  padding:8px 4px 8px;display:grid;gap:4px;justify-items:center;background:var(--sunken);color:var(--ink)}
+.cell .cn{font:700 11px/1 var(--f);opacity:.75}
+.cell .cl{font-weight:600;font-size:12.5px}
+.cell .cv{font:700 11px/1 var(--f)}
+.cell.GREEN{background:var(--ok-bg);color:var(--ok)}
+.cell.AMBER{background:var(--warn-bg);color:var(--warn)}
+.cell.RED{background:var(--bad-bg);color:var(--bad)}
+.cell.UNKNOWN{color:var(--unk);border-style:dashed;border-color:currentColor;
+  background:repeating-linear-gradient(135deg,transparent 0 5px,var(--unk-bg) 5px 10px)}
+.cell[aria-expanded="true"]{outline:2px solid currentColor;outline-offset:-1px}
+.cbody{background:var(--sunken);border:1px solid var(--line);border-radius:11px;padding:12px;
+  font-size:12.5px;display:grid;gap:8px}
+.cbody .ch{font-weight:600;font-size:13px}
+
+.dash{min-height:100%;background:var(--page);display:flex;flex-direction:column}
+.dhead{background:var(--app);border-bottom:1px solid var(--line);padding:12px 24px;
+  display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.dhead h1{margin:0;font-size:17px;font-weight:700;letter-spacing:-.015em;text-wrap:balance}
+.dhead .who{font-size:12.5px;color:var(--ink-2)}
+.dhead .env{margin-left:auto;display:flex;gap:16px;font:500 11.5px/1 var(--fm);color:var(--ink-2)}
+.dhead .env b{color:var(--ink);font-weight:600}
+.dshell{flex:1;display:grid;grid-template-columns:250px minmax(0,1fr) 384px;gap:16px;
+  padding:16px 24px 24px;align-items:start}
+@media (max-width:1040px){.dshell{grid-template-columns:1fr}}
+.dcol{display:grid;gap:8px;align-content:start}
+.dlab{font:600 12px/1 var(--f);color:var(--ink-2);margin:0}
+.emyun{appearance:none;cursor:pointer;text-align:left;font-family:var(--f);color:var(--ink);width:100%;
+  background:var(--app);border:1px solid var(--line);border-radius:11px;padding:12px 12px;
+  display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center}
+.emyun:hover{border-color:var(--accent)}
+.emyun:active{background:var(--sunken)}
+.emyun[aria-current="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.emyun .n{font-weight:600;font-size:14.5px}
+.emyun .d{grid-column:1;font-size:11.5px;color:var(--ink-2)}
+.rate{font:700 12px/1 var(--fm);padding:4px 8px;border-radius:5px;font-variant-numeric:tabular-nums}
+.rate.hi{background:var(--bad-bg);color:var(--bad)}
+.rate.mid{background:var(--warn-bg);color:var(--warn)}
+.rate.lo{background:var(--ok-bg);color:var(--ok)}
+.dcard{background:var(--app);color:var(--ink);border:1px solid var(--line);border-radius:13px;padding:16px;display:grid;gap:8px}
+.dcard>svg{width:100%;height:auto;display:block;border-radius:9px}
+.dtitle{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.dtitle h2{margin:0;font-size:14.5px;font-weight:600;text-wrap:balance}
+.dtitle .u{font:500 11.5px/1 var(--f);color:var(--ink-3)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-2)}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:-1px;margin-right:4px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{background:var(--app);border:1px solid var(--line);border-radius:11px;padding:12px 12px}
+.kpi .k{font:500 11.5px/1 var(--f);color:var(--ink-2)}
+.kpi .v{font-size:21px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi .s{font-size:11px;color:var(--ink-2);margin-top:2px}
+.prio{background:var(--app);border:1px solid var(--line);border-radius:11px;padding:12px 16px;
+  display:grid;gap:8px}
+.prio .ph{display:flex;align-items:center;gap:8px}
+.prio .ph .n{font-weight:700;font-size:15.5px;flex:1}
+.prio dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:12.5px}
+.prio dt{color:var(--ink-2)}
+.prio dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+.quote{background:var(--sunken);border-radius:11px;padding:12px;font-size:12.5px;color:var(--ink-2);line-height:1.7}
+.quote b{color:var(--ink)}
+.caveat{font-size:11.5px;color:var(--ink-3);line-height:1.7;border-top:1px dashed var(--line);
+  padding-top:12px;margin:0}
+.d-map text{font-family:var(--f)}
+.minimap{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+.wx{display:grid;gap:8px}
+.wxr{display:grid;grid-template-columns:38px 1fr 78px;gap:8px;align-items:center}
+.wxr .t{font:500 11px/1 var(--fm);color:var(--ink-3)}
+.wxr .mm{text-align:right;font:500 11px/1 var(--fm);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.logr{display:grid;grid-template-columns:auto 1fr auto auto;gap:8px;align-items:center;
+  padding:8px 12px;background:var(--sunken);border:1px solid var(--line);border-radius:10px;font-size:13.5px}
+.logr .d{font:500 11.5px/1 var(--fm);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.logr .n{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logr.void{opacity:.55}
+.logr.void .n{text-decoration:line-through}
+.logr.pre{border-style:dashed}
+/* 처음 쓰는 사람용 안내 */
+/* 개요 — 처음 보는 사람에게 서비스를 한 화면에 설명한다 */
+.ov{max-width:880px;margin:0 auto;padding:40px 16px 64px;display:grid;gap:40px}
+.ov h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.ov .lede{margin:8px 0 0;font-size:15px;color:var(--ink-2);line-height:1.7;max-width:62ch}
+.ovs{display:grid;gap:12px}
+.ovs>h2{margin:0;font:600 12.5px/1 var(--f);color:var(--ink-3);letter-spacing:.04em}
+.ovg{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.ovg.two{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.ovc{background:var(--sheet);border:1px solid var(--line);border-radius:13px;padding:16px;
+  display:grid;gap:8px;align-content:start;color:var(--ink)}
+.ovc .k{font:600 13.5px/1.3 var(--f)}
+.ovc .v{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.ovc .big{font:700 24px/1 var(--f);font-variant-numeric:tabular-nums}
+.ovc .src{font:400 11px/1.4 var(--f);color:var(--ink-2)}
+.ovtab{display:grid;gap:8px}
+.ovtab .r{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:baseline;
+  font-size:12.5px;padding:8px 0;border-top:1px solid var(--line)}
+.ovtab .r b{font-weight:600;color:var(--ink)}
+.ovtab .r span{color:var(--ink-2);line-height:1.6}
+.ovno{display:flex;flex-wrap:wrap;gap:8px}
+.ovno span{font:400 12.5px/1 var(--f);color:var(--ink-2);background:var(--sunken);
+  border-radius:16px;padding:8px 12px}
+.ovfoot{font-size:12.5px;color:var(--ink-2);line-height:1.8;border-top:1px dashed var(--line);padding-top:16px}
+@media (max-width:560px){.ov{padding:24px 16px 40px;gap:24px}.ov h1{font-size:22px}
+  .ovtab .r{grid-template-columns:1fr;gap:2px}}
+.gbar{appearance:none;cursor:pointer;width:100%;text-align:left;font:600 12.5px/1 var(--f);
+  color:var(--ink);background:var(--sunken);border:1px solid var(--line);border-radius:9px;
+  padding:12px;display:flex;align-items:center;gap:8px}
+.gbar .c{margin-left:auto;color:var(--ink-2);font-weight:400}
+.gbar:hover{border-color:var(--accent);color:var(--accent)}
+.gbar:active{background:var(--line)}
+.gwrap{position:fixed;inset:0;z-index:20;background:var(--scrim);display:grid;place-items:center;padding:16px}
+.gcard{background:var(--app);color:var(--ink);border:1px solid var(--line);border-radius:16px;
+  width:min(560px,100%);max-height:100%;overflow:auto;
+  display:grid;gap:16px;align-content:start;padding:16px}
+.ghead{display:flex;align-items:center;gap:12px}
+.ghead h2{margin:0;font-size:16px;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.ghead .xbtn{margin-left:auto}
+.gsec{display:grid;gap:8px}
+.gsec h3{margin:0;font:600 12.5px/1 var(--f);color:var(--ink-2)}
+.gstep{display:grid;grid-template-columns:24px 1fr;gap:2px 12px;align-items:start}
+.gstep b{grid-row:1/3;width:24px;height:24px;border-radius:50%;background:var(--sunken);
+  color:var(--ink);font:600 12px/24px var(--f);text-align:center}
+.gstep .n{font-weight:600;font-size:13.5px}
+.gstep .d{grid-column:2;font-size:12px;color:var(--ink-2);line-height:1.5}
+.gleg{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;font-size:12.5px}
+.gleg span:nth-child(even){color:var(--ink-2)}
+.gterm{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:12.5px}
+.gterm dt{font-weight:600;white-space:nowrap}
+.gterm dd{margin:0;color:var(--ink-2);line-height:1.5}
+.gfig{margin:0;display:grid;gap:8px}
+.gfig svg{width:100%;max-width:380px;justify-self:center;height:auto;display:block;
+  background:var(--sunken);border-radius:9px;padding:8px}
+.gfig figcaption{font-size:11.5px;color:var(--ink-3);line-height:1.6}
+@media (max-width:420px){.gterm,.gstep{grid-template-columns:1fr}
+  .gterm dt{margin-top:4px}.gstep b{grid-row:auto}}
+.xbtn{appearance:none;cursor:pointer;border:1px solid var(--line);background:var(--app);color:var(--ink-2);
+  font:600 12px/1 var(--f);padding:8px 12px;border-radius:7px;white-space:nowrap;min-height:32px}
+.xbtn:hover{border-color:var(--accent);color:var(--accent)}
+.xbtn:active{background:var(--sunken)}
+.xbtn:disabled{opacity:.4;cursor:not-allowed}
+.xbtn.warn:hover{border-color:var(--bad);color:var(--bad)}
+.xbtn[aria-current="true"]{border-color:var(--accent);color:var(--accent);background:var(--sunken)}
+.form{display:grid;grid-template-columns:1fr 1.2fr auto;gap:8px;align-items:center}
+.form.two{grid-template-columns:1fr auto}
+.form input,.form select{font:500 13px/1.2 var(--f);padding:12px 8px;border-radius:9px;
+  border:1px solid var(--line);background:var(--app);color:var(--ink);min-width:0;width:100%}
+.srch{display:grid;grid-template-columns:1fr auto;gap:8px}
+.srch input{font:500 14px/1.2 var(--f);padding:12px 12px;border-radius:10px;border:1px solid var(--line);
+  background:var(--app);color:var(--ink);min-width:0;width:100%}
+.dupq{border:1px solid var(--warn);background:var(--warn-bg);border-radius:12px;padding:12px;display:grid;gap:8px}
+.dupq b{font:700 13px/1 var(--f);color:var(--warn)}
+.dupq p{margin:0;font-size:13px;color:var(--ink)}
+.dupq .row{display:flex;gap:8px;flex-wrap:wrap}
+.dupq .row button{appearance:none;cursor:pointer;font:600 13px/1 var(--f);padding:12px 12px;border-radius:9px;
+  border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);flex:1}
+.dupq .row button.q{background:none;color:var(--ink-2);border-color:var(--line);flex:none}
+.pchips{display:flex;gap:8px;flex-wrap:wrap}
+.pchip{appearance:none;cursor:pointer;font:600 12px/1 var(--f);padding:8px 12px;border-radius:8px;
+  border:1px solid var(--line);background:var(--app);color:var(--ink-2)}
+.pchip:hover{border-color:var(--accent)}
+.pchip:active{background:var(--sunken)}
+.pchip[aria-current="true"]{border-color:var(--accent);color:var(--ink);background:var(--sunken)}
+.drow{appearance:none;cursor:pointer;width:100%;text-align:left;font-family:var(--f);color:var(--ink);
+  background:var(--app);border:1px solid var(--line);border-radius:10px;padding:8px 12px;
+  display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+.drow:hover{border-color:var(--accent)}
+.drow:active{background:var(--sunken)}
+.drow[aria-current="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.drow .n{font-weight:600;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.p2{font:600 11.5px/1 var(--f);padding:4px 8px;border-radius:5px;
+  background:var(--warn-bg);color:var(--warn)}
+.p1{font:600 11px/1 var(--f);padding:4px 8px;border-radius:4px;
+  background:var(--unk-bg);color:var(--unk)}
+.ocr{background:var(--sunken);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px}
+.ocr pre{margin:0;font:500 11.5px/1.75 var(--fm);background:var(--app);border:1px solid var(--line);
+  border-radius:8px;padding:8px 12px;color:var(--ink-2);white-space:pre-wrap;overflow-x:auto}
+.ocr pre b{color:var(--ink)}
+.spark{display:flex;align-items:flex-end;gap:8px;height:96px}
+.spark i{flex:1;background:var(--accent);border-radius:4px 4px 0 0;display:block;position:relative}
+.spark i.lo{background:var(--bad)}
+.sparkx{display:flex;gap:8px;font:500 10px/1 var(--fm);color:var(--ink-3)}
+.sparkx span{flex:1;text-align:center}
+.sparkv{display:flex;gap:8px;font:600 11px/1 var(--fm);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.sparkv span{flex:1;text-align:center}
+.vrow{display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center;background:var(--sunken);
+  border:1px solid var(--line);border-radius:11px;padding:12px 12px}
+.vrow .n{font-weight:600;font-size:14.5px}
+.vrow .w{grid-column:1;font-size:11.5px;color:var(--ink-2)}
+:where(button,summary,a):focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="switch">
+  <div class="tabs" role="tablist">
+    <button data-proto="O" aria-current="true">개요</button>
+    <button data-proto="A">모바일</button>
+    <button data-proto="B">PC 화면</button>
+    <button data-proto="C">농업기술센터</button>
+  </div>
+  <p class="thesis" id="thesis"></p>
+</div>
+<div class="stage" id="stage"></div>
+
+<script>
+/* ═══════════ 시드 ═══════════
+   약·구역·판정 = DB 시드 전달서 6절
+   병해충 52개 = data/파뭉-데이터수집 2·3·1·7번 엑셀 실값
+   논문 = FR-504, 표시 전용                                   */
+const MOA={'5':'IRAC 5','28':'IRAC 28','15':'IRAC 15','6':'IRAC 6','22a':'IRAC 22A','1b':'IRAC 1B',
+  '3a':'IRAC 3A','11a':'IRAC 11A'};
+const MOTH='배추좀나방', FLEA='벼룩잎벌레';
+const DRUGS=[
+ {id:1,b:'엑설트',p:'스피네토람 액상수화제',co:'동방아그로',rt:'경엽처리',dil:'2000배',phi:7,max:3,ps:'ok',ut:'수확7일전',uc:'3회',ing:[['스피네토람','5']],pest:MOTH},
+ {id:2,b:'델리게이트',p:'스피네토람 입상수화제',co:'팜한농',rt:'경엽처리',dil:'2000배',phi:7,max:3,ps:'ok',ut:'수확7일전',uc:'3회',ing:[['스피네토람','5']],pest:MOTH},
+ {id:3,b:'베네비아',p:'사이안트라닐리프롤 유상수화제',co:'팜한농',rt:'경엽처리',dil:'4000배',phi:14,max:3,ps:'ok',ut:'수확14일전',uc:'3회',ing:[['사이안트라닐리프롤','28']],pest:MOTH},
+ {id:4,b:'라이몬',p:'노발루론 액상수화제',co:'한국삼공',rt:'경엽처리',dil:'2000배',phi:10,max:2,ps:'ok',ut:'수확10일전',uc:'2회',ing:[['노발루론','15']],pest:MOTH},
+ {id:5,b:'검투사',p:'레피멕틴 유제',co:'팜한농',rt:'경엽처리',dil:'2000배',phi:14,max:3,ps:'ok',ut:'수확14일전',uc:'3회',ing:[['레피멕틴','6']],pest:MOTH},
+ {id:6,b:'어바운트',p:'인독사카브 분산성액제',co:'농협케미컬',rt:'경엽처리',dil:'1000배',phi:14,max:2,ps:'ok',ut:'수확14일전',uc:'2회',ing:[['인독사카브','22a']],pest:MOTH},
+ {id:7,b:'다지논',p:'다이아지논 유제',co:'아그리젠토',rt:'관주처리',dil:'800배',phi:null,max:1,ps:'plant',pw:14,ut:'파종(정식)일부터14일',uc:'1회',ing:[['다이아지논','1b']],pest:FLEA},
+ {id:8,b:'더블킥',p:'아바멕틴.스피네토람 액상수화제',co:'농협케미컬',rt:'경엽처리',dil:'2000배',phi:14,max:2,ps:'ok',ut:'수확14일전',uc:'2회',ing:[['아바멕틴','6'],['스피네토람','5']],pest:MOTH},
+ /* 심을 때 쓰는 약 — 수확 전 일수가 없고 최대 횟수는 있다 (4_약사용규칙 「심을 때」 519줄) */
+ {id:9,b:'근충탄',p:'델타메트린.테부피림포스 입제',co:'경농',rt:'정식 전 토양처리',dil:'2㎏/10a',phi:null,max:1,ps:'stage',ut:'정식기',uc:'1회',ing:[['델타메트린','3a'],['테부피림포스','1b']],pest:FLEA},
+ /* 수확 전 일수·최대 횟수 둘 다 없는 약 — 미생물제 (4_약사용규칙 「제한 없음」 41줄) */
+ {id:10,b:'젠타리',p:'비티아이자와이 입상수화제',co:'한국삼공',rt:'경엽처리',dil:'2000배',phi:null,max:null,ps:'no_std',ut:'발생초기',uc:'-',ing:[['비티아이자와이','11a']],pest:MOTH}
+];
+/* [이름, 구분, 학명, 부위, 등록약 줄수, 사진 출처, 발생 월, 등급, 증상] */
+const PESTDB=[["검은무늬병", "병", "", "잎", 14, "양배추(대체)", "8, 9, 10", "설명", "초기에는 잎에 원형의 검고 작은 반점을 형성합니다. 병반의 주위는 황색을 띠고, 진전됨에 따라서 겹둥근무늬로 확대되고 심하게"],
+["검은썩음병", "병", "", "잎, 뿌리", 0, "양배추(대체)", "7, 8, 9, 10", "경보", "처음에는 잎 가장자리가 황색으로 변하고, 엽맥이 흑색으로 변합니다. 진전되면 담황색 부정형 반점으로 나타나고, 잎의 아래쪽으"],
+["균핵병", "병", "", "잎, 줄기", 16, "양배추(대체)", "", "", "잎, 밑둥에서부터 담갈색으로 변해 썩어 올라가며, 감염 부위에는 흰 균사가 자라고, 후에 흑색 부정형의 큰 균핵이나 구형 "],
+["그루썩음병", "병", "", "잎, 줄기", 2, "사진 없음", "8, 9, 10", "경보", "유묘기에는 잘록 증상으로 나타나며, 생육 초기 이후에는 엽육이 썩는 증상으로 나타납니다. 처음에는 지제부가 수침상으로 썩고,"],
+["노균병", "병", "", "잎", 203, "순무(대체)", "6, 7, 8, 9, 10", "경보", "잎에 초기에는 연한 황색의 작은 부정형 병반이 형성되고, 잎 뒷면에 하얀 곰팡이가 다량 형성됩니다. 유묘기에 발생하면 잎은 "],
+["모자이크병", "병", "", "잎, 줄기", 0, "순무(대체)", "4, 5, 6, 7, 8, 9, 10", "설명", "3종류의 바이러스에 의해서 발생하며, 일반적으로 모자이크증상으로 나타나지만 바이러스의 종류에 따라서 병 증상이 약간씩 다르"],
+["무름병", "병", "Erwinia carotovora (Jones) Bergey et al.", "잎", 104, "배추", "7, 8, 9, 10, 11", "경보", "잎의 밑둥에 처음에는 수침상의 반점으로 나타나고, 진전되면 담갈색 내지 회갈색의 부정형 병반으로 변해 썩기 시작하여 점점 "],
+["밑둥썩음병", "병", "", "잎, 줄기, 뿌리", 19, "사진 없음", "", "", "잎과 뿌리에 발생하며, 잎에서는 처음 밑둥에 타원형의 갈색 내지 암갈색 반점으로 나타납니다. 진전되면 잎의 위쪽으로 병반이 "],
+["반쪽시들음병", "병", "", "잎, 뿌리", 12, "배추", "6, 7, 8, 9, 10", "경보", "잎이 비대칭적으로 자라고, 배추 포기 전체가 시드는 증상이 발생함. 뿌리 내부가 검게 변색됨."],
+["뿌리마름병", "병", "Aphanomyces raphani Kendr.", "잎, 줄기, 뿌리", 12, "사진 없음", "", "", "뿌리의 지제부가 마른 상태로 잘록하게 썩어 들어가고, 잎은 푸른 상태로 시듭니다. 병은 서서히 진전되므로 초기에는 건전한 그"],
+["뿌리혹병, 무사마귀병", "병", "Plasmodiophora brassicae Woron.", "잎, 뿌리", 112, "배추", "7, 8, 9, 10, 11", "경보", "감염된 그루의 지상부는 건전한 그루에 비해 생육이 부진하고, 병이 진전됨에 따라서 점점 시드는 증세가 심해집니다. 생육초기에"],
+["순무황화모자이크바이러스병", "병", " Turnip yellow mosaic virus", "잎", 0, "배추", "8, 9, 10", "경보", "황화, 모자이크, 괴사반점 기형 증상"],
+["시들음병", "병", "", "잎, 뿌리", 4, "배추", "", "", "병든 그루는 아랫 잎이 누렇게 변하고, 생육이 불량해지며, 그루 전체가 시듭니다. 주로 생육중기 이후에 발생됩니다. 병이 진전"],
+["역병", "병", "Phytophthora cryptogea Pethybr. & Laff., Phytophthora drechsleri Pethybr. & Lafferty", "잎, 뿌리", 0, "사진 없음", "", "", "초기에는 아랫잎이 시들고, 가끔 연한 적갈색을 띠기도 합니다. 병이 진전되면 포기 전체가 심하게 시들고, 말라죽습니다. 전 생"],
+["잘록병", "병", "Thanatephorus cucumeris (Frank) Donk", "줄기", 3, "사진 없음", "", "", "유묘기에 잘록증상으로 나타나며, 병든 묘는 잘 쓰러지고, 말라죽습니다."],
+["점균병", "병", "", "잎, 줄기", 0, "사진 없음", "", "", "잎, 줄기에 발생합니다. 처음에는 잎에 까만 준구형의 포자낭이 형성되고, 오랜 시간이 지나면 끈적끈적한 회백색의 변형체가 형"],
+["탄저병", "병", "Colletotrichum higginsianum Sacc.", "잎, 줄기", 0, "무(대체)", "", "", "주로 잎에 발생하며, 후에 줄기와 꼬투리에도 발생합니다. 잎에서는 처음에 흰색의 원형 내지 타원형 반점으로 나타나고, 진전되"],
+["흰가루병", "병", "Erysiphe polygoni DC.", "잎, 줄기", 55, "사진 없음", "", "", "꼬투리, 잎, 줄기에 발생합니다. 생육 중인 잎에도 발생하는 것으로 보고되어 있으나 발견되지 않았으며, 주로 월동한 배추의 "],
+["흰무늬병", "병", "Cercospora brassicicola Henn.", "잎", 3, "사진 없음", "", "", "잎에 원형 내지 부정형의 흰 반점으로 나타나며, 진전되면 병반이 서로 융합하여 커지고, 잎이 마릅니다"],
+["담배거세미나방", "해충", "Spodoptera litura", "벌레, 잎, 줄기", 151, "배추", "5, 6, 7, 8, 9", "설명", "담배거세미나방은 유충이 피해를 주는데, 거의 모든 채소류와 밭작물은 물론 과수, 화훼, 특용작물, 사료작물, 정원수, 잡초"],
+["도둑나방", "해충", "Mamestra brassicae", "벌레, 잎, 줄기", 48, "배추", "", "", "유충이 피해를 주는데, 잡식성이어서 일본에서는 107종의 식물을 가해하는 것으로 알려져 있습니다. 채소, 화훼 등 원예작물에 "],
+["두줄달팽이", "해충", "Limax marginatus", "벌레, 잎", 0, "배추", "", "", "최근 노지 및 시설에서 연중 다발생하여 큰 피해를 주고 있습니다. 피해증상은 작은뾰족민달팽이와 마찬가지로 작물의 잎 , 꽃 및"],
+["들민달팽이", "해충", "Deroceras laeve", "벌레, 잎, 줄기", 7, "배추", "1, 2, 3, 4, 5, 10, 11, 12", "설명", "온실 내의 습한 장소에서 발생이 많지만 노지에서도 장마기나 흐린 날에 배추, 딸기 등과 같은 식물에 피해가 많이 나타납니다."],
+["명주달팽이", "해충", "Acusta despecta", "벌레, 잎", 9, "배추", "", "", "시설보다 노지에서 발생이 많고, 습기가 많은 곳에 발생이 많습니다. 채소류, 과수류, 화훼류 등 노지작물에 피해를 주고 있습니다."],
+["무우테두리진딧물", "해충", "Lipaphis erysimi", "벌레, 잎", 136, "배추", "4, 5, 6, 8, 9, 10, 11", "설명", "십자화과 채소의 어린 잎 뒷면에 무리지어 기생하며 즙액을 빨아 먹음으로써 식물체의 양분이 소실되고 잎이 오그라지거나 말리는"],
+["무잎벌", "해충", "Athalia rosae", "벌레, 잎, 줄기", 14, "배추", "5, 6, 7, 9", "설명", "유충이 십자화과 채소 등의 잎을 갉아 먹으며, 피해 흔적은 배추흰나비나 밤나방 유충의 형태와 비슷하지만, 큰 잎줄기만 남기"],
+["배추순나방", "해충", "Hellula undalis", "벌레, 잎", 2, "배추", "4, 6, 8, 10", "설명", "배추순나방은 유충이 피해를 주며, 배추 등 십자화과 채소작물에 발생하는 해충으로 유충은 어린 배추와 무의 생장점을 뚫고 들"],
+["배추좀나방", "해충", "Plutella xylostella", "벌레, 잎", 288, "배추", "6, 7, 8, 9, 10", "경보", "배추좀나방은 주로 유충이 피해를 주며, 배추, 양배추, 무, 유채 등 십자화과 채소와 냉이 같은 잡초의 잎도 가해합니다. 어"],
+["배추흰나비", "해충", "Pieris rapae", "벌레, 잎, 줄기", 139, "배추", "6", "설명", "배추흰나비는 유충이 어릴 때는 잎의 표피만 남기고 엽육을 가해하나, 다자란 유충은 잎줄기만 남기고 폭식합니다. 특히 봄, 가"],
+["벼룩잎벌레", "해충", "Phyllotreta striolata", "벌레, 잎, 뿌리", 155, "배추", "8, 9", "경보", "벼룩잎벌레의 성충은 잎을, 유충은 뿌리를 가해합니다. 배추, 무, 양배추 등 십자화과 작물의 어린 유묘를 갉아먹어 피해를 주"],
+["복숭아혹진딧물", "해충", "Myzus persicae", "벌레, 잎", 137, "배추", "", "", "채소작물, 화훼작물, 과수작물 등의 원예작물의 신초나 새로나온 잎의 즙액을 빨아먹어 피해부위가 생장을 멈춰 세로로 말리고 "],
+["섬서구메뚜기", "해충", "Atractomorpha lata", "벌레, 잎, 줄기", 0, "배추", "8, 9", "설명", "잡식성으로 약충과 성충이 주로 잎을 가해합니다. 피해를 받은 잎은 불규칙한 구멍이 생기며, 발생이 심한 경우 줄기만 남기고 "],
+["아메리카잎굴파리", "해충", "Liriomyza trifolii", "벌레, 잎", 10, "배추", "", "", "유충은 잎에 구불구불한 굴(터널)을 뚫어 가해하며, 성충은 잎에 붙어 즙을 핥아먹거나 산란하여 잎에 작은 반점을 남기는 피"],
+["알락수염노린재", "해충", "Dolycoris baccarum", "벌레", 0, "배추", "3, 4, 5, 6, 7, 8, 9, 10, 11", "설명", "경작지 주변에 살면서 약충 및 성충이 다양한 식물의 즙액을 빨아 먹습니다. 십자화과, 콩과, 벼과 식물 등 11과 36종이 "],
+["양배추가루진딧물", "해충", "Brevicoryne brassicae", "벌레, 잎", 34, "배추", "", "", "주로 케일, 양배추 등에 집단으로 발생하며, 잎 뒷면, 꽃대, 어린싹 등을 흡즙하여 식물체의 양분이 소실됩니다. 또 감로를 "],
+["왕담배나방", "해충", "Helicoverpa armigera", "벌레, 잎", 22, "배추", "5, 6, 10", "설명", "해충은 광식성으로 채소, 과수,화훼류에 널리 가해합니다. 담배, 감자, 목화, 콩, 녹두, 땅콩, 토마토 등의 꽃잎이나 새잎"],
+["좁은가슴잎벌레", "해충", "Phaedon brassicae", "벌레, 잎", 2, "배추", "5, 6", "설명", "좁은가슴잎벌레는 성충과 유충이 잎을 가해합니다. 성충과 유충은 배추, 무 등의 잎을 가해하는데, 어린잎이 피해를 받으면 잎이"],
+["파밤나방", "해충", "Spodoptera exigua", "벌레, 잎", 299, "배추", "5, 6, 7, 8, 9, 10, 11", "설명", "유충은 잡식성으로 채소, 화훼류, 전작물 등을 널리 가해합니다. 파에서는 잎 속으로 들어가 안에서 가해하며, 결구 식물에서는"],
+["홍비단노린재", "해충", "Eurydema dominulus", "벌레, 잎, 줄기", 1, "배추", "6, 7, 8, 9", "설명", "십자화과 식물에 피해를 주는 해충으로, 배추, 무, 냉이 등의 잎이나 줄기 등을 흡즙하고, 흡즙이 심하면 흡즙 부위가 백색"],
+["열대거세미나방", "해충", "Spodoptera frugiperda", "벌레", 104, "옥수수(보충)", "", "", "○ 80종 이상의 식물의 잎과 줄기를 가해하는 해충이며 옥수수, 수수, 사탕수수, 벼 뿐만 아니라 다른 야채와 목화 등에 "],
+["파총채벌레", "해충", "Thrips tabaci", "벌레", 87, "브로콜리(보충)", "", "", "작물의 잎을 흡즙하고, 피해 부위는 황백색으로 변함"],
+["매미나방", "해충", "Lymantria dispar", "벌레", 48, "사과(보충)", "4, 5, 6, 7", "설명", "유충이 잎을 섭식합니다. 발생량은 그리 많지 않으나 유충의 섭식량이 많아 1~2마리가 여러 개의 화분을 망칩니다. 독나방과에 "],
+["거세미나방", "해충", "Agrotis segetum", "벌레", 37, "강낭콩(보충)", "6, 8, 10", "설명", "대부분의 애벌레가 강낭콩을 비롯해 시금치, 들깨, 참깨, 콩, 고추, 감자 등 각종 채소류에서 어린 작물의 줄기를 절단하거"],
+["콩명나방", "해충", "Maruca vitrata", "벌레", 5, "팥(보충)", "4, 5, 6, 7, 8, 9, 10, 11", "설명", "기주식물은 콩, 팥, 동부, 녹두 등 콩과식물과 백합과, 아욱과, 그리고 미모사과 일부 식물을 섭식합니다. 유충은 꽃눈과 꽃"],
+["대만총채벌레", "해충", "Frankliniella intonsa", "벌레", 2, "고추(보충)", "5, 6, 7, 8, 9, 10, 11", "설명", "꽃에 주로 발생하는데, 성충과 유충이 피해를 줍니다. 꽃에 서식하는 유충은 열매가 맺히면 꽃받침 부분의 틈 속에서 집단으로 "],
+["세균검은무늬병", "병", "Pseudomonas syringae (McCulloch) Young et al.", "잎", 1, "사진 없음", "", "", "잎에 발생하며, 잎에 처음에는 수침상의 작은 반점으로 나타나고, 진전되면 담갈색 내지 흑갈색의 부정형 반점으로 변합니다. 일"],
+["꽃노랑총채벌레", "해충", "Frankliniella occidentalis", "벌레", 1, "고추(보충)", "", "", "꽃에 주로 발생하는데, 성충과 유충이 피해를 줍니다. 꽃에 서식하는 유충은 열매가 맺히면 꽃받침 부분의 틈 속에서 집단으로 "],
+["무씨스트선충", "해충", "", "", 1, "", " ", "", ""],
+["북쪽비단노린재", "해충", "", "", 2, "", " ", "", ""],
+["사탕무씨스트선충", "해충", "", "", 5, "", " ", "", ""],
+["씨스트선충", "해충", "", "", 15, "", " ", "", ""],
+["완두굴파리", "해충", "", "", 97, "", " ", "", ""]];
+/* 7_바이러스_매개충 — 배추 4줄 원문 */
+const VECTORS={
+ '순무황화모자이크바이러스병':[{n:'벼룩잎벌레',rows:155,src:'NCPMS: "벼룩잎벌레, 검정배줄벼룩잎벌레에 의해 매개되어 전염"'}],
+ '모자이크병':[
+  {n:'복숭아혹진딧물',rows:137,src:'NCPMS: "CMV는 80종 이상의 진딧물에 의해서 비영속전염", "복숭아혹진딧물은 TuMV 매개"'},
+  {n:'무우테두리진딧물',rows:136,src:'NCPMS: "CMV는 80종 이상의 진딧물에 의해서 비영속전염"'},
+  {n:'양배추가루진딧물',rows:34,src:'NCPMS: "CMV는 80종 이상의 진딧물에 의해서 비영속전염"'}]
+};
+/* FR-504 논문 실측값 — 표시 전용. 작물·병해충·성분이 맞을 때만 쓴다 */
+const PAPERS=[
+ {crop:'딸기',pest:'점박이응애',ing:'플룩사메타마이드',moa:'30',moaName:'이속사졸린계',
+  metric:'사충률',cond:'전국 27계통 · 충북·충남·전북·경북 채집 · 시설 딸기',
+  series:[[2021,79.6],[2022,83.1],[2023,50.6],[2024,49.1],[2025,32.3]],
+  cite:'유기렬 외, 「Fluxametamide의 시설 딸기 재배지 점박이응애에 대한 년도별 약효 변동 및 저항성 발달」, 한국농약과학회지 30(1) 51-56, 2026'},
+ {crop:'토마토',pest:'꽃노랑총채벌레',ing:'에마멕틴벤조에이트',moa:'6',moaName:'아버멕틴계',
+  metric:'사멸률',cond:'지역별 계통 조사 · 연도별 자료 아님',
+  single:'대부분 지역 80% 이상 · 청양·무주 100%',
+  cite:'한국농약과학회지 29(4), 2025'}
+];
+/* FR-602 OCR — P1. 이력 입력 화면에서만 쓴다 */
+const OCR={raw:['(주)팜한농','델리게이트 입상수화제','스피네토람 25%','제조일자 2026.03.11','유효기간 제조일로부터 3년'],
+  cands:[2,8]};
+/* FR-601 기상청 단기예보 — 판정과 분리 (api-spec API-31) */
+const WX={at:'2026-10-13 05:00 발표',
+  h:[['09시',20,0],['12시',60,1.2],['15시',80,3.5],['18시',40,0.4],['21시',10,0]]};
+
+const TODAY='2026-10-13', BASE='2026-10-05';
+let LOGSEQ=1;
+const FIELDS=[{id:1,name:'대관령 윗밭',crop:'배추',
+  poly:[[112,148],[286,126],[300,300],[126,322]],
+  zones:[
+   {id:'A',planted:'2026-08-20',logs:[{d:'2026-09-05',u:5},{d:'2026-09-15',u:4},{d:'2026-09-25',u:4},{d:'2026-10-03',u:1}]},
+   {id:'B',planted:'2026-09-01',logs:[]},
+   {id:'C',planted:'2026-08-25',logs:[{d:'2026-09-10',u:1},{d:'2026-09-24',u:1}]}]}];
+for(const f of FIELDS) for(const z of f.zones) for(const l of z.logs) l.id=LOGSEQ++;
+const SEED=JSON.stringify(FIELDS);
+const resetAll=()=>{const s=JSON.parse(SEED);FIELDS.length=0;FIELDS.push(...s)};
+
+/* ═══════════ 기하 ═══════════ */
+const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+function clipX(poly,x,right){
+  const out=[];
+  for(let i=0;i<poly.length;i++){
+    const a=poly[i],b=poly[(i+1)%poly.length];
+    const ia=right?a[0]>=x:a[0]<=x, ib=right?b[0]>=x:b[0]<=x;
+    if(ia)out.push(a);
+    if(ia!==ib&&b[0]!==a[0]){const t=(x-a[0])/(b[0]-a[0]);out.push([x,a[1]+t*(b[1]-a[1])])}
+  }
+  return out;
+}
+/* FR-102 균등 분할 — 사각형이면 양 변을 등분, 아니면 x축 등분 후 클리핑 */
+function zonePoly(f,i){
+  const n=f.zones.length,p=f.poly;
+  if(p.length===4){const t0=i/n,t1=(i+1)/n;
+    return [lerp(p[0],p[1],t0),lerp(p[0],p[1],t1),lerp(p[3],p[2],t1),lerp(p[3],p[2],t0)];}
+  const xs=p.map(q=>q[0]),x0=Math.min(...xs),x1=Math.max(...xs);
+  return clipX(clipX(p,x0+(x1-x0)*i/n,true),x0+(x1-x0)*(i+1)/n,false);
+}
+const area=p=>{let s=0;for(let i=0,j=p.length-1;i<p.length;j=i++)s+=(p[j][0]+p[i][0])*(p[j][1]-p[i][1]);
+  return Math.abs(s/2)};
+const HA=0.42/area(FIELDS[0].poly);
+const ha=p=>area(p)*HA;
+const pstr=p=>p.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
+const centroid=p=>[p.reduce((a,q)=>a+q[0],0)/p.length,p.reduce((a,q)=>a+q[1],0)/p.length];
+
+/* ═══════════ 판정 엔진 — api-spec 11절 하드 룰 13개 ═══════════ */
+const drug=id=>DRUGS.find(d=>d.id===id);
+const fld=()=>FIELDS.find(f=>f.id===S.field)||FIELDS[0];
+const Z=()=>fld().zones;
+const zone=id=>Z().find(z=>z.id===id)||Z()[0];
+const zname=z=>z.id+'구역';
+const live=z=>z.logs.filter(l=>!l.void);
+const addLog=(z,d,u)=>z.logs.push({id:LOGSEQ++,d,u});
+const voidLog=id=>{for(const f of FIELDS)for(const z of f.zones)for(const l of z.logs)if(l.id===id)l.void=true};
+const addDays=(iso,n)=>{const t=new Date(iso+'T00:00:00Z');t.setUTCDate(t.getUTCDate()+n);
+  return t.toISOString().slice(0,10)};
+const md=iso=>{const[,m,d]=iso.split('-');return `${+m}월 ${+d}일`};
+const days=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+
+const HASMAX=p=>p==='ok'||p==='stage'||p==='plant';   // 최대 횟수를 가진 변환 구분
+function judge(z,cand,today){
+  const hist=z.logs.filter(l=>l.d>=z.planted&&!l.void).sort((a,b)=>a.d<b.d?-1:1);
+  const none=hist.length===0;
+  const ev=(raw,src)=>({raw,src,base:BASE});
+  const c1={no:1,state:'GREEN',reason:`배추 ${cand.pest}에 쓸 수 있게 등록된 약입니다.`,ev:ev(null,'농약안전정보시스템 PSIS · SVC01')};
+
+  const PSIS='농약안전정보시스템 PSIS · SVC01';
+  let c2;
+  if(cand.ps==='ok'){const hv=addDays(today,cand.phi);
+    c2={no:2,state:'GREEN',reason:`${md(hv)}부터 수확할 수 있습니다.`,phi:cand.phi,hv,ev:ev(cand.ut,PSIS)};
+  }
+  /* 심을 때 쓰는 약: 수확이 기준이 아니라 이 항목이 아예 해당되지 않는다 */
+  else if(cand.ps==='stage')
+    c2={no:2,state:'NA',phi:null,hv:null,ev:ev(cand.ut,PSIS),
+        reason:'심을 때 땅에 넣는 약이라 수확 전 일수가 없습니다. 이미 자라는 중이면 지금 쓰는 약이 아닙니다.'};
+  /* 심은 날이 기준인 약: 수확이 아니라 정식일로 센다 */
+  else if(cand.ps==='plant'){const due=addDays(z.planted,cand.pw), over=today>due;
+    c2={no:2,state:over?'RED':'GREEN',phi:null,hv:null,due,ev:ev(cand.ut,PSIS),
+        reason:over?`심은 날(${md(z.planted)})부터 ${cand.pw}일까지 쓰는 약입니다. ${md(due)}이 지났습니다.`
+                   :`심은 날부터 ${cand.pw}일까지 씁니다. ${md(due)}까지입니다.`};
+  }
+  else c2={no:2,state:'UNKNOWN',phi:null,hv:null,ev:ev(cand.ut,PSIS),
+    reason:cand.ps==='failed'?'포장지에 적힌 시기를 날짜로 바꾸지 못했습니다.':'수확 며칠 전까지인지 적혀 있지 않습니다.'};
+
+  const rows=cand.ing.map(([name])=>{
+    let used=0,lim=[];
+    for(const l of hist){const h=drug(l.u);
+      if(!h.ing.some(([n])=>n===name))continue;
+      used++;                                                            // 처리법 무관
+      if(h.rt===cand.rt&&HASMAX(h.ps)&&h.max!=null)lim.push(h.max);      // 한도는 같은 처리법만
+    }
+    if(cand.max!=null)lim.push(cand.max);
+    const limit=lim.length?Math.min(...lim):null;
+    return{name,rt:cand.rt,used,limit,rem:limit==null?null:limit-used};
+  });
+  let c3;
+  if(!HASMAX(cand.ps)||cand.max==null)
+    c3={no:3,state:'UNKNOWN',reason:'몇 번까지 쓸 수 있는지 확인하지 못했습니다.',rows,ev:ev(cand.uc,'농약안전정보시스템 PSIS · SVC01')};
+  else if(none)
+    c3={no:3,state:'UNKNOWN',reason:'이 구역에 뿌린 기록이 없습니다.',rows,ev:ev(cand.uc,'농약안전정보시스템 PSIS · SVC01')};
+  else{
+    const w=rows.reduce((a,b)=>(a.rem??9)<=(b.rem??9)?a:b);
+    const over=rows.some(r=>r.rem!=null&&r.rem<=0);
+    c3={no:3,state:over?'RED':'GREEN',rows,ev:ev(cand.uc,'농약안전정보시스템 PSIS · SVC01'),
+        reason:over?`${w.name}을 ${w.used}번 썼습니다. 이번 농사에 ${w.limit}번까지라 더 못 씁니다.`
+                   :`${w.name}을 ${w.used}번 썼습니다. 이번 농사에 ${w.limit}번까지라 ${w.rem}번 남았습니다.`};
+  }
+
+  const last=hist[hist.length-1];
+  const lm=last?drug(last.u).ing.map(([,m])=>m):null, my=cand.ing.map(([,m])=>m);
+  let c4;
+  if(none) c4={no:4,state:'UNKNOWN',reason:'직전에 무엇을 뿌렸는지 알 수 없습니다.',moa:my,last:null,
+    ev:ev(null,'농림축산식품부 PLS 안내')};
+  else{const dup=my.filter(m=>lm.includes(m));
+    c4={no:4,state:dup.length?'AMBER':'GREEN',moa:my,last:lm,ev:ev(null,'농림축산식품부 PLS 안내 · IRAC v11.5'),
+        reason:dup.length?`직전에 뿌린 ${drug(last.u).b}와 같은 ${dup.join('·')}번 계통입니다.`
+                        :`직전은 ${lm.join('·')}번, 이번은 ${my.join('·')}번. 계통이 다릅니다.`};
+  }
+  const cs=[c1,c2,c3,c4];
+  const state=cs.some(c=>c.state==='RED')?'RED'
+             :cs.some(c=>c.state==='NA')?'NA'            // 「해당 없음」은 통과로 올리지 않는다
+             :cs.some(c=>c.state==='UNKNOWN')?'UNKNOWN'
+             :cs.some(c=>c.state==='AMBER')?'AMBER':'GREEN';
+  return{cand,state,checks:cs};
+}
+
+/* ═══════════ 표시 공통 ═══════════ */
+const LBL={GREEN:'가능',AMBER:'주의',RED:'불가',UNKNOWN:'확인 필요',NA:'심을 때'};
+const ORD={GREEN:0,AMBER:1,NA:2,UNKNOWN:3,RED:4};
+const CTITLE={1:'등록',2:'시기',3:'횟수',4:'계통'};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const moa=c=>`<span class="moa"><span class="kr">계통 ${c}</span></span>`;
+const moaFull=c=>`<span class="moa"><span class="kr">계통 ${c}</span><span class="in">${MOA[c]||'코드'}</span></span>`;
+const chip=s=>`<span class="chip ${s}">${LBL[s]}</span>`;
+const listFor=name=>DRUGS.filter(d=>d.pest===name);
+const pestRow=name=>PESTDB.find(p=>p[0]===name);
+const hash=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h};
+
+function dist(z){
+  const L=z.logs.filter(l=>l.d>=z.planted&&!l.void),n=L.length,m={};
+  for(const l of L)for(const[,c]of drug(l.u).ing)m[c]=(m[c]||0)+1;
+  return{n,rows:Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([c,k])=>({c,k,s:k/n}))};
+}
+function alts(z,v){
+  const mine=v.cand.ing.map(([,m])=>m);
+  return listFor(v.cand.pest).filter(d=>d.id!==v.cand.id&&!d.ing.some(([,m])=>mine.includes(m)))
+    .map(d=>judge(z,d,TODAY)).filter(x=>x.state==='GREEN');
+}
+const keyReason=v=>(v.checks.find(c=>c.state==='RED')||v.checks.find(c=>c.state==='NA')
+  ||v.checks.find(c=>c.state==='UNKNOWN')||v.checks.find(c=>c.state==='AMBER')||v.checks[2]).reason;
+
+function checkBody(c){
+  let b='';
+  if(c.no===2&&c.hv) b+=`<p style="margin:0">오늘 뿌리면 <b>${c.hv}</b>부터 딸 수 있습니다. 마지막으로 뿌리고 ${c.phi}일은 지나야 합니다.</p>`;
+  if(c.no===3&&c.rows.length){
+    b+=`<table class="ing"><thead><tr><th>성분</th><th>뿌리는 법</th><th>쓴 횟수</th><th>최대</th><th>남음</th></tr></thead><tbody>
+      ${c.rows.map(r=>`<tr><td>${r.name}</td><td>${r.rt}</td><td>${r.used}</td><td>${r.limit??'—'}</td>
+      <td class="${r.rem!=null&&r.rem<=0?'out':''}">${r.rem??'—'}</td></tr>`).join('')}</tbody></table>`;
+    if(c.rows.length>1) b+=`<p style="margin:0;color:var(--ink-2)">성분이 둘인 약이라 성분마다 따로 셉니다.</p>`;
+  }
+  if(c.no===4) b+=`<div class="flow">직전 ${c.last?c.last.map(moaFull).join(' '):'기록 없음'} 다음 ${c.moa.map(moaFull).join(' ')}</div>
+    <p style="margin:0;color:var(--ink-2)">계통은 약이 벌레를 죽이는 방식입니다.
+      이름이 달라도 번호가 같으면 같은 계통이고, 같은 계통만 거듭 쓰면 약이 잘 안 듣게 됩니다.
+      번호는 농약 포장에 적힌 작용기작 번호를 씁니다.</p>`;
+  b+=`<div class="evid">${c.ev.raw?`<span>원문 <b>「${esc(c.ev.raw)}」</b></span>`:''}
+      <span>${c.ev.src}</span><span>자료 기준일 ${c.ev.base}</span></div>`;
+  return b;
+}
+/* 사진이 아니라 구분 표식입니다. 실제 사진 유무는 캡션으로 따로 말한다 */
+function pestIcon(p){
+  const bg=['var(--m-1)','var(--m-2)','var(--m-3)','var(--m-6)','var(--m-4)','var(--m-5)'][hash(p[0])%6];
+  const g=p[1]==='병'
+   ? `<path d="M8 31 Q17 7 30 11 Q42 15 40 32 Q24 41 8 31Z" fill="#dfe6cf" opacity=".92"/>
+      <path d="M19 19 Q28 14 32 23 Q30 31 21 29 Q16 24 19 19Z" fill="#6b5a3a" opacity=".85"/>`
+   : `<path d="M24 15 v20" stroke="#7b8f66" stroke-width="1.5"/>
+      <path d="M16 20 l-6-4M32 20 l6-4M16 30 l-6 4M32 30 l6 4" stroke="#20251f" stroke-width="1.7"/>
+      <ellipse cx="24" cy="26" rx="8" ry="11" fill="#2c3330"/><ellipse cx="24" cy="14" rx="5" ry="4.5" fill="#20251f"/>`;
+  return `<svg class="ico" viewBox="0 0 48 48" role="img" aria-label="${p[1]} 구분 표식">
+    <rect width="48" height="48" rx="9" fill="${bg}"/>${g}</svg>`;
+}
+const photoTag=p=>{
+  const v=p[5];
+  if(!v) return `<span class="tag no">도감에 없음</span>`;
+  if(v==='사진 없음') return `<span class="tag no">사진 없음</span>`;
+  if(v==='배추') return `<span class="tag">배추 사진 있음</span>`;
+  return `<span class="tag">${esc(v.replace('(',' '). replace(')',''))} 사진</span>`;
+};
+const timeTag=p=>{
+  const [,,,,,,mon,grade]=p;
+  if(!grade||!mon.trim()) return `<span class="tag no">나오는 시기 모름</span>`;
+  const m=mon.replace(/\s/g,'').split(',').join('·')+'월';
+  return grade==='경보'
+    ? `<span class="tag alert">예전 경보 ${m}</span>`
+    : `<span class="tag">도감에 적힌 시기 ${m}</span>`;
+};
+/* FR-201 부위 필터 */
+const PARTS=[['전체',null],['잎','잎'],['줄기','줄기'],['덩이·뿌리','덩이|뿌리'],['벌레가 보임','벌레']];
+function pestList(){
+  const q=(S.q||'').trim();
+  return PESTDB.filter(p=>{
+    if(S.part){const re=new RegExp(S.part); if(!re.test(p[3]))return false}
+    if(q&&!p[0].includes(q)&&!(p[2]||'').toLowerCase().includes(q.toLowerCase()))return false;
+    return true;
+  });
+}
+
+/* ═══════════ 지도 ═══════════ */
+const PARCELS=[['0,0 142,0 150,58 0,78',1],['142,0 272,0 282,50 150,58',3],['272,0 400,0 400,66 282,50',2],
+ ['0,78 150,58 112,148 0,168',2],['150,58 236,52 200,136 112,148',6],['236,52 282,50 286,126 200,136',3],
+ ['282,50 400,66 400,158 286,126',1],['400,158 400,232 302,236 286,126',4],['400,232 400,292 300,300 302,236',2],
+ ['0,168 112,148 119,236 0,252',6],['0,252 119,236 126,322 0,332',1],
+ ['126,322 216,311 221,416 130,426',3],['216,311 300,300 311,402 221,416',6],
+ ['300,300 400,292 400,398 311,402',2],['0,332 130,426 120,440 0,440',4],
+ ['130,426 221,416 311,402 400,398 400,440 125,440',5]
+].map(([s,f],i)=>({id:i+1,f,p:s.split(' ').map(t=>t.split(',').map(Number))}));
+const FILLS=['var(--m-1)','var(--m-2)','var(--m-3)','var(--m-4)','var(--m-5)','var(--m-6)'];
+
+function mapSVG(o={}){
+  const {sel=null,pick=false,preview=null,vb='0 0 400 440',par='xMidYMid slice',cls=''}=o;
+  const taken=new Set(FIELDS.map(f=>f.parcel).filter(Boolean));
+  let s=`<svg class="${cls}" viewBox="${vb}" preserveAspectRatio="${par}" role="img"
+    aria-label="${pick?'등록할 수 있는 필지를 보여주는 지도':'밭 경계와 구역을 보여주는 지도'}">
+    <rect x="-200" y="-200" width="900" height="900" fill="var(--m-bg)"/>`;
+  for(const pa of PARCELS){
+    const on=pick&&S.pick===pa.id, used=taken.has(pa.id);
+    s+=`<polygon ${pick&&!used?`data-parcel="${pa.id}" style="cursor:pointer"`:''}
+      points="${pstr(pa.p)}" fill="${on?'rgba(31,79,216,.5)':FILLS[pa.f%FILLS.length]}"
+      stroke="var(--m-edge)" stroke-width="${on?2.6:1}" stroke-opacity="${on?1:.34}"/>`;
+    if(pick&&!used) s+=`<text x="${centroid(pa.p)[0]}" y="${centroid(pa.p)[1]}" text-anchor="middle"
+      class="z-sub">${ha(pa.p).toFixed(2)} ha</text>`;
+  }
+  s+=`<path d="M48 0 C40 110 58 250 36 440" fill="none" stroke="var(--m-edge)" stroke-width="7" stroke-opacity=".3"/>
+      <path d="M48 0 C40 110 58 250 36 440" fill="none" stroke="var(--m-edge)" stroke-width="2"
+        stroke-opacity=".5" stroke-dasharray="9 7"/>`;
+  for(const f of FIELDS){
+    const cur=f.id===S.field;
+    s+=`<polygon points="${pstr(f.poly)}" fill="none" stroke="#fff" stroke-width="${cur?3.4:2}"
+      stroke-opacity="${cur?.95:.55}" stroke-linejoin="round"/>`;
+    if(!cur)continue;
+    f.zones.forEach((z,i)=>{
+      const p=zonePoly(f,i), on=z.id===sel, n=live(z).length, c=centroid(p);
+      s+=`<g style="cursor:pointer" data-zone="${z.id}">
+        <polygon points="${pstr(p)}" fill="${on?'rgba(31,79,216,.46)':'rgba(255,255,255,.1)'}"
+          stroke="#fff" stroke-width="${on?2.6:1.5}" stroke-opacity="${on?1:.75}"
+          ${n===0?'stroke-dasharray="7 5"':''} stroke-linejoin="round"/>
+        <text class="z-lbl" x="${c[0]}" y="${c[1]}" text-anchor="middle">${zname(z)}</text>
+        <text class="z-sub" x="${c[0]}" y="${c[1]+15}" text-anchor="middle">${n?`이력 ${n}건`:'기록 없음'}</text>
+      </g>`;
+    });
+  }
+  if(preview){
+    const {poly,n}=preview, tmp={poly,zones:Array(n).fill(0)};
+    s+=`<polygon points="${pstr(poly)}" fill="rgba(31,79,216,.3)" stroke="#fff" stroke-width="3"/>`;
+    for(let i=0;i<n;i++){const p=zonePoly(tmp,i),c=centroid(p);
+      s+=`<polygon points="${pstr(p)}" fill="none" stroke="#fff" stroke-width="1.6" stroke-dasharray="6 4"/>
+          <text class="z-sub" x="${c[0]}" y="${c[1]}" text-anchor="middle">${String.fromCharCode(65+i)}</text>`}
+  }
+  return s+`</svg>`;
+}
+
+/* ═══════════ 날씨 · 기록 · 이력 ═══════════ */
+function wxCard(){
+  const head=`<div class="dtitle"><h2>강수 예보</h2>
+    <span class="u">참고용. 판정에 넣지 않습니다</span></div>`;
+  if(!S.wx) return `<div class="dcard">${head}
+    <p class="empty" style="margin:0">날씨를 불러오지 못했습니다.
+      네 가지 확인과 살포 기록은 그대로 쓸 수 있습니다.</p>
+    <div class="evid"><span>기상청 응답 없음</span><span>503 EXTERNAL_API_UNAVAILABLE</span></div>
+    <button class="xbtn" style="justify-self:start" data-wx="1">다시 불러오기</button></div>`;
+  return `<div class="dcard">${head}
+    <div class="wx">${WX.h.map(([t,pop,mm])=>`<div class="wxr">
+      <span class="t">${t}</span>
+      <span class="track"><i style="width:${pop}%;background:${pop>=60?'var(--accent)':'var(--ink-3)'}"></i></span>
+      <span class="mm">${pop}%${mm?' · '+mm+'mm':''}</span></div>`).join('')}</div>
+    <p class="caveat">기상청 단기예보 · ${WX.at}<br>날씨로 살포 가능 판정을 따로 만들지 않습니다.</p>
+    <button class="xbtn" style="justify-self:start" data-wx="0">못 불러왔을 때 보기</button></div>`;
+}
+/* FR-401 중복 후보 확인 — 409 DUPLICATE_RECORD 뒤 confirmed_separate */
+function saveBlock(z,v){
+  if(S.saved) return `<div class="toast">${v.cand.b} · ${zname(z)} · ${TODAY} 기록함</div>`;
+  if(S.dup) return `<div class="dupq"><b>오늘 같은 약 기록이 이미 있습니다</b>
+    <p>${TODAY}에 ${v.cand.b}를 기록했습니다. 같은 날 따로 한 번 더 뿌린 것인가?</p>
+    <div class="row"><button data-save="2">따로 뿌렸습니다, 한 건 더 기록</button>
+      <button class="q" data-dup="0">그만두기</button></div>
+    <div class="evid"><span>409 DUPLICATE_RECORD · confirmed_separate</span></div></div>`;
+  const dup=live(z).some(l=>l.d===TODAY&&l.u===v.cand.id);
+  /* 심을 때 쓰는 약은 막지 않는다 — 심을 때 뿌린 걸 뒤늦게 넣을 수 있습니다. 다만 권하지는 않는다 */
+  const na=v.state==='NA';
+  return `<button class="btn${na?' ghost':''}" data-save="${dup?'dup':'1'}" ${v.state==='RED'?'disabled':''}>
+    ${v.state==='RED'?'쓸 수 없는 약입니다':na?'심을 때 뿌린 거면 기록하기':'뿌렸습니다, 기록하기'}</button>`;
+}
+/* FR-403 조회·누락 확인 · FR-404 과거 입력 · FR-402 취소 · FR-602 OCR */
+function logEditor(z){
+  const ls=[...z.logs].sort((a,b)=>a.d<b.d?-1:1), L=live(z);
+  const last=L.length?L[L.length-1]:null;
+  return `${L.length?`<p class="note" style="text-align:left;margin:0">가장 최근 기록은 ${last.d}, ${days(last.d,TODAY)}일 전입니다.</p>`:''}
+  ${ls.length?ls.map(l=>{const d=drug(l.u), pre=l.d<z.planted;
+    return `<div class="logr ${l.void?'void':''} ${pre?'pre':''}">
+      <span class="d">${l.d.slice(5)}</span>
+      <span class="n">${d.b}<span style="color:var(--ink-3);font-weight:400"> · ${d.ing.map(([n])=>n).join('.')}</span></span>
+      ${d.ing.map(([,m])=>moa(m)).join('')}
+      ${l.void?`<span class="xbtn" style="cursor:default">취소됨</span>`
+        :`<button class="xbtn warn" data-void="${l.id}">취소</button>`}
+    </div>${pre&&!l.void?`<p class="note" style="text-align:left;margin:0">심기 전(${z.planted})에 뿌린 것이라 이번 농사 횟수에서 빠집니다</p>`:''}`}).join('')
+    :`<p class="empty" style="margin:0">살포 기록이 없습니다. 횟수와 계통은 기록이 있어야 볼 수 있습니다.</p>`}
+  <div class="sec">예전에 뿌린 것 넣기</div>
+  <div class="form">
+    <input type="date" id="fd" value="${TODAY}" max="${TODAY}" aria-label="살포 날짜">
+    <select id="fu" aria-label="약">${DRUGS.map(d=>`<option value="${d.id}">${d.b}</option>`).join('')}</select>
+    <button class="xbtn" data-add="1" style="padding:12px 12px">추가</button>
+  </div>
+  ${S.ocr?ocrBlock(z):`<button class="xbtn" data-ocr="1" style="justify-self:start">
+    포장지 찍어서 입력하기</button>`}`;
+}
+function ocrBlock(z){
+  const sel=S.ocrPick?drug(S.ocrPick):null;
+  return `<div class="ocr">
+    <div class="dtitle"><h2>포장지에서 읽은 글자</h2><span class="p1">참고 기능</span></div>
+    <pre>${OCR.raw.map(l=>/델리게이트/.test(l)?`<b>${esc(l)}</b>`:esc(l)).join('\n')}</pre>
+    <p style="margin:0;font-size:12.5px;color:var(--ink-2)">
+      약 이름으로 보이는 줄을 자료와 맞춰 봤습니다. 어느 제품인지는 직접 고르세요.</p>
+    ${OCR.cands.map(id=>{const d=drug(id);
+      return `<button class="drow" data-ocrpick="${id}" aria-current="${S.ocrPick===id}">
+        <span class="n">${d.b}</span><span style="font-size:11px;color:var(--ink-2)">${d.p}</span>
+        ${moa(d.ing[0][1])}</button>`}).join('')}
+    <div class="form two">
+      <input type="date" id="od" value="${TODAY}" max="${TODAY}" aria-label="실제 살포 날짜">
+      <button class="xbtn" data-ocrsave="1" ${sel?'':'disabled'} style="padding:12px 12px">
+        ${zname(z)}에 저장</button>
+    </div>
+    <p class="caveat">포장지의 제조일자 2026.03.11은 <b>뿌린 날짜가 아닙니다.</b>
+      어느 구역에 언제 뿌렸는지는 직접 확인하고 저장하세요.<br>
+      글자가 안 읽히거나 맞는 약이 없으면 위에서 직접 넣으면 됩니다.</p>
+    <button class="xbtn" data-ocr="0" style="justify-self:start">닫기</button>
+  </div>`;
+}
+
+/* ═══════════ 모바일 화면 ═══════════ */
+const GEAR=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+  <circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M18.4 18.4l-2.1-2.1M7.7 7.7L5.6 5.6"/></svg>`;
+function aHome(){
+  const f=fld(), z=zone(S.zone), D=dist(z);
+  const tiles=[1,2,3,4].map(i=>judge(z,drug(i),TODAY));
+  return `<div id="map">${mapSVG({sel:S.zone,vb:'55 62 300 490'})}</div>
+  <div class="topbar">
+    <button class="pill" data-view="setup"><div class="t">${f.name}</div>
+      <div class="s">${f.crop} · ${ha(f.poly).toFixed(2)} ha · 구역 ${f.zones.length}</div></button>
+    <span class="spacer"></span>
+    <button class="iconbtn" data-view="setup" title="밭·구역 설정">${GEAR}</button>
+    <button class="iconbtn" data-cases="1" title="검증 사례">6</button>
+  </div>
+  <div class="sheet">
+    <span class="grab"></span>
+    <button class="gbar" data-guide="1">처음이면 — 말 풀이와 쓰는 순서<span class="c">›</span></button>
+    <div class="sh"><h2>${zname(z)}</h2>
+      <span class="m">심은 지 ${days(z.planted,TODAY)}일</span>
+      <span class="spacer"></span>
+      <button class="xbtn" data-view="logs">뿌린 기록 ${live(z).length}건</button></div>
+    ${D.n===0?`<p class="empty">살포 기록이 없습니다. 뿌린 적이 있으면 먼저 넣어야 횟수와 계통을 볼 수 있습니다.</p>`
+      :`<div class="sec" style="margin:0">이번 농사에 쓴 계통</div>
+        <div class="bars">${D.rows.map(r=>`<div class="bar">${moa(r.c)}
+        <span class="track"><i style="width:${Math.round(r.s*100)}%"></i></span>
+        <span class="pct">${r.k}회</span></div>`).join('')}</div>`}
+    <div class="sec">창고에 있는 약</div>
+    <div class="tiles">${tiles.map(v=>`<button class="tile" data-drug="${v.cand.id}">
+      <span class="n">${v.cand.b}</span><span class="i">${v.cand.p}</span>
+      <span class="f">${chip(v.state)}${moa(v.cand.ing[0][1])}</span></button>`).join('')}</div>
+    <button class="btn ghost" data-view="pest">다른 약 찾기</button>
+  </div>
+  ${S.cases?casesSheet():''}`;
+}
+/* FR-201 부위 · FR-202 후보 · FR-204 이름 검색 */
+function aPest(){
+  const list=pestList();
+  return `<div class="panel">
+    <div class="phead"><button data-back="1">←</button><h2>병해충 선택</h2></div>
+    <div class="pbody">
+      <div class="srch"><input id="q" type="search" placeholder="이름·학명으로 찾기"
+        value="${esc(S.q||'')}" aria-label="병해충 검색">
+        ${S.q?`<button class="xbtn" data-q="">지우기</button>`:''}</div>
+      <div class="pchips">${PARTS.map(([n,v])=>`
+        <button class="pchip" data-part="${v||''}" aria-current="${(S.part||'')===(v||'')}">${n}</button>`).join('')}</div>
+      <p class="note" style="text-align:left;margin:0">배추 ${list.length}가지 (전체 ${PESTDB.length}가지)</p>
+      ${list.length?list.map(p=>`<button class="pest" data-pest="${esc(p[0])}">
+        ${pestIcon(p)}
+        <span class="n">${p[0]}</span>
+        <span class="s">${p[2]?`<i>${esc(p[2])}</i> · `:''}${p[3]||'부위 정보 없음'}</span>
+        <span class="r">${p[4]?`<span class="tag">등록된 약 ${p[4]}건</span>`:`<span class="tag no">등록된 약 없음</span>`}
+          ${timeTag(p)}</span></button>`).join('')
+        :`<p class="empty">찾는 이름이 없습니다. 검색어를 바꾸거나 부위를 「전체」로 되돌려 보세요.</p>`}
+      <p class="caveat">도감과 사진은 국가농작물병해충관리시스템(NCPMS) 자료입니다. 비영리 조건으로 씁니다.<br>
+        나오는 시기는 <b>지난 기록</b>입니다. 지금 경보가 났다는 뜻이 아닙니다. 자료 기준일 ${BASE}</p>
+    </div></div>`;
+}
+/* FR-205 바이러스·매개충 */
+function aVector(){
+  const v=VECTORS[S.pest]||[];
+  return `<div class="panel">
+    <div class="phead"><button data-back="1">←</button><h2>${S.pest}</h2></div>
+    <div class="pbody">
+      <p class="empty" style="margin:0">바이러스를 직접 고치는 약은 등록돼 있지 않습니다.
+        옮기는 벌레를 잡는 쪽으로 안내합니다.</p>
+      <div class="sec">바이러스를 옮기는 벌레</div>
+      ${v.length?v.map(x=>`<div class="vrow">
+        <span class="n">${x.n}</span>
+        <span class="w">${esc(x.src)}</span>
+        <span class="r" style="grid-row:1/3;grid-column:2;display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <span class="tag">등록된 약 ${x.rows}건</span>
+          <button class="xbtn" data-pest="${esc(x.n)}">이 벌레로 판정</button></span>
+      </div>`).join('')
+       :`<p class="empty" style="margin:0">어떤 벌레가 옮기는지 확인된 자료가 없습니다. 아무 벌레나 대신 넣지 않습니다.</p>`}
+      <p class="caveat">아래 약은 <b>그 벌레를 잡는 약</b>입니다. 바이러스가 낫는다는 뜻이 아닙니다.<br>
+        근거 국가농작물병해충관리시스템(NCPMS) · 자료 기준일 ${BASE}</p>
+    </div></div>`;
+}
+/* FR-301 · FR-304 */
+function aDrugs(){
+  const z=zone(S.zone), row=pestRow(S.pest);
+  const vs=listFor(S.pest).map(d=>judge(z,d,TODAY)).sort((a,b)=>ORD[a.state]-ORD[b.state]);
+  return `<div class="panel">
+    <div class="phead"><button data-back="1">←</button><h2>${S.pest} · ${zname(z)}</h2></div>
+    <div class="pbody">${vs.length?vs.map(v=>`<button class="drug" data-drug="${v.cand.id}">
+      <span class="b">${v.cand.b}</span><span class="p">${v.cand.p} · ${v.cand.dil}</span>
+      <span class="r">${chip(v.state)}${moa(v.cand.ing[0][1])}</span>
+      <span class="w">${esc(keyReason(v))}</span></button>`).join('')
+      :(row&&row[4]
+        ? `<p class="empty">모은 자료에는 ${S.pest} 약이 <b>${row[4]}건</b> 있습니다. 이 시연본에는 자세한 내용이 들어 있지 않습니다.</p>`
+        : `<p class="empty">${S.pest}에 등록된 약이 없습니다.<br>농업기술센터에 문의하세요.</p>`)}
+    </div></div>`;
+}
+const segHTML=()=>`<div class="seg">${Z().map(z=>`
+  <button data-zone="${z.id}" aria-current="${z.id===S.zone}">
+    <span>${z.id}구역</span><span class="zs">${live(z).length?`이력 ${live(z).length}`:'기록 0'}</span>
+  </button>`).join('')}</div>`;
+function aDetail(){
+  const z=zone(S.zone), v=judge(z,drug(S.drug),TODAY);
+  const A=(v.state==='RED'||v.state==='AMBER'||v.state==='NA')?alts(z,v):[];
+  const open=S.bk!=null?v.checks[S.bk]:null;
+  return `<div class="bwrap">
+    <div class="bhead"><div class="r1"><button class="back" data-back="1">←</button>
+      <span class="t">${v.cand.b}</span>${chip(v.state)}</div>${segHTML()}</div>
+    <div class="bbody">
+      <div class="vbox ${v.state}"><span class="vt">${LBL[v.state]}</span>
+        <span class="vs">${v.cand.p} · ${v.cand.dil}</span>
+        <span style="margin-top:4px">${v.cand.ing.map(([,m])=>moaFull(m)).join(' ')}</span></div>
+      <div class="strip">${v.checks.map((c,i)=>`
+        <button class="cell ${c.state}" data-bk="${i}" aria-expanded="${S.bk===i}">
+          <span class="cn">${c.no}</span><span class="cl">${CTITLE[c.no]}</span>
+          <span class="cv">${LBL[c.state]}</span></button>`).join('')}</div>
+      ${open?`<div class="cbody"><span class="ch">${open.no} ${CTITLE[open.no]} · ${esc(open.reason)}</span>
+        ${checkBody(open)}</div>`
+       :`<p class="note">번호를 누르면 왜 그런지 나옵니다.</p>`}
+      ${A.length?`<div class="sec">대신 쓸 수 있는 약</div>${A.map(a=>`<div class="alt">
+        <span class="n">${a.cand.b}</span>
+        <span class="w">${a.cand.ing.map(([,m])=>m).join('·')}번 계통이라 겹치지 않습니다</span>
+        <span class="r">${chip('GREEN')}${moa(a.cand.ing[0][1])}</span></div>`).join('')}`:''}
+      ${((v.state==='RED'||v.state==='NA')&&!A.length)?`<p class="note">대신 쓸 약이 없습니다. 농업기술센터에 물어보세요.</p>`:''}
+      ${wxCard()}
+      ${saveBlock(z,v)}
+    </div></div>`;
+}
+const aLogs=()=>{const z=zone(S.zone);
+  return `<div class="panel"><div class="phead"><button data-back="1">←</button>
+    <h2>${zname(z)} 뿌린 기록</h2></div>
+    <div class="pbody">${logEditor(z)}</div></div>`;};
+/* FR-504 논문 실측값 — 표시 전용 */
+function aPaper(){
+  return `<div class="panel"><div class="phead"><button data-back="1">←</button>
+    <h2>논문에서 실제로 잰 값</h2><span class="p1">참고</span></div>
+    <div class="pbody">
+      <p class="empty" style="margin:0"><b>보여주기만 합니다.</b> 이 값은 내 구역 판정에 쓰지 않습니다.
+        작물·병해충·성분이 똑같은 자료만 보여 줍니다. 배추 ${MOTH}에 맞는 논문은 아직 없습니다.</p>
+      ${PAPERS.map(p=>`<div class="dcard">
+        <div class="dtitle"><h2>${p.crop} · ${p.pest}</h2><span class="u">${p.ing} · ${p.moaName} (IRAC ${p.moa})</span></div>
+        ${p.series?`<div class="spark">${p.series.map(([,v])=>`
+            <i class="${v<60?'lo':''}" style="height:${v}%"></i>`).join('')}</div>
+          <div class="sparkv">${p.series.map(([,v])=>`<span>${v}</span>`).join('')}</div>
+          <div class="sparkx">${p.series.map(([y])=>`<span>${y}</span>`).join('')}</div>
+          <p style="margin:0;font-size:12.5px">해마다 잰 ${p.metric}. 100마리 중 죽은 비율입니다.</p>`
+         :`<p style="margin:0;font-size:14px;font-weight:600">${p.metric} ${p.single}</p>
+           <p style="margin:0;font-size:12.5px;color:var(--ink-2)">해마다 잰 자료가 아니라서 값 하나로 둡니다.</p>`}
+        <p class="caveat">시험 조건 ${p.cond}<br>${esc(p.cite)}</p>
+      </div>`).join('')}
+      <p class="caveat">두 자료는 작물도 해충도 성분도 다릅니다. <b>한 흐름으로 잇지 않습니다.</b>
+        자료가 없는 해는 비워 둡니다.</p>
+    </div></div>`;
+}
+const paperFor=(crop,pest,ings)=>PAPERS.find(p=>p.crop===crop&&p.pest===pest&&ings.includes(p.ing));
+
+/* FR-101 밭 등록 · FR-102 균등 분할 · FR-103 작물·정식일 */
+function aNewField(){
+  const pa=PARCELS.find(x=>x.id===S.pick);
+  const nf=S.nf;
+  return `<div class="panel">
+    <div class="phead"><button data-back="1">←</button><h2>밭 등록</h2></div>
+    <div style="flex:none;height:230px;position:relative;overflow:hidden">
+      ${mapSVG({cls:'minimap',pick:true,preview:pa?{poly:pa.p,n:nf.n}:null})}</div>
+    <div class="pbody">
+      ${pa?`<p class="note" style="text-align:left;margin:0">${pa.id}번 필지 · ${ha(pa.p).toFixed(2)} ha</p>`
+        :`<p class="empty" style="margin:0">지도에서 밭을 누르세요. 팜맵에 있는 경계를 그대로 씁니다.</p>`}
+      <div class="form two"><select id="nfc" aria-label="작물">
+        ${['배추','감자','토마토'].map(c=>`<option ${c===nf.crop?'selected':''}>${c}</option>`).join('')}</select>
+        <input type="date" id="nfd" value="${nf.planted}" aria-label="정식일"></div>
+      <div class="sh"><span class="sec" style="margin:0">몇 개로 나눌까</span><span class="spacer"></span>
+        <button class="xbtn" data-nfn="-1" ${nf.n<=1?'disabled':''}>−</button>
+        <span style="font:700 15px/1 var(--fm);min-width:28px;text-align:center">${nf.n}</span>
+        <button class="xbtn" data-nfn="1" ${nf.n>=6?'disabled':''}>＋</button></div>
+      <p class="note" style="text-align:left;margin:0">구역마다 심은 날과 뿌린 기록을 따로 셉니다. 나중에 바꿀 수 있습니다.</p>
+    </div>
+    <div class="pfoot"><button class="btn" data-newfield="1" ${pa?'':'disabled'}>
+      ${pa?`구역 ${nf.n}개로 등록하기`:'지도에서 밭을 먼저 고르세요'}</button></div>
+  </div>`;
+}
+/* FR-102 분할 수정 · FR-103 정보 수정 */
+function aSetup(){
+  const f=fld(), hasLogs=f.zones.some(z=>live(z).length);
+  return `<div class="panel">
+    <div class="phead"><button data-back="1">←</button><h2>밭과 구역</h2></div>
+    <div class="pbody">
+      <div class="sec">내 밭 ${FIELDS.length}개</div>
+      ${FIELDS.map(x=>`<button class="emyun" data-field="${x.id}" aria-current="${x.id===S.field}">
+        <span class="n">${x.name}</span>
+        <span class="d">${x.crop} · ${ha(x.poly).toFixed(2)} ha · 구역 ${x.zones.length}</span>
+        <span class="tag" style="grid-row:1/3;grid-column:2">기록 ${x.zones.reduce((a,z)=>a+live(z).length,0)}건</span>
+      </button>`).join('')}
+      <button class="xbtn" data-view="newfield" style="justify-self:start">밭 추가</button>
+      <div class="sec">${f.name}을 ${f.zones.length}개로 나눴습니다</div>
+      ${f.zones.map(z=>`<div class="logr" style="grid-template-columns:auto 1fr auto">
+        <span class="n">${zname(z)}</span>
+        <input type="date" value="${z.planted}" data-planted="${z.id}" aria-label="${zname(z)} 정식일"
+          style="font:500 12.5px/1.2 var(--fm);padding:8px;border-radius:8px;border:1px solid var(--line);
+          background:var(--app);color:var(--ink)">
+        <span class="tag">${ha(zonePoly(f,f.zones.indexOf(z))).toFixed(2)} ha</span>
+      </div>`).join('')}
+      <div class="sh"><span class="sec" style="margin:0">몇 개로 나눌까</span><span class="spacer"></span>
+        <button class="xbtn" data-split="-1" ${hasLogs||f.zones.length<=1?'disabled':''}>−</button>
+        <span style="font:700 15px/1 var(--fm);min-width:28px;text-align:center">${f.zones.length}</span>
+        <button class="xbtn" data-split="1" ${hasLogs||f.zones.length>=6?'disabled':''}>＋</button></div>
+      ${hasLogs?`<p class="empty" style="margin:0">살포 기록이 있는 구역이 있어 지금은 나눌 수 없습니다.
+        기록을 먼저 취소해야 합니다.</p>
+        <div class="evid"><span>409 ZONE_HAS_RECORDS</span></div>`
+       :`<p class="note" style="text-align:left;margin:0">기록이 없어 지금은 바꿀 수 있습니다.</p>`}
+      <p class="caveat">밭 경계는 농림축산식품부 팜맵 자료입니다. 면적은 그 경계로 계산한 시연용 값입니다.</p>
+    </div></div>`;
+}
+const CASES=[
+ {z:'A',p:MOTH,d:3,n:'A구역 · 베네비아',t:'네 가지 모두 통과'},
+ {z:'A',p:MOTH,d:2,n:'A구역 · 델리게이트',t:'직전과 같은 5번 계통'},
+ {z:'A',p:MOTH,d:4,n:'A구역 · 라이몬',t:'노발루론을 2번 다 썼습니다'},
+ {z:'C',p:MOTH,d:8,n:'C구역 · 더블킥',t:'성분 둘인 약. 적은 쪽 한도를 씁니다'},
+ {z:'B',p:MOTH,d:3,n:'B구역 · 베네비아',t:'뿌린 기록이 없습니다'},
+ {z:'A',p:FLEA,d:7,n:'벼룩잎벌레 · 다지논',t:'심은 날부터 14일까지인데 지났습니다'},
+ {z:'A',p:FLEA,d:9,n:'벼룩잎벌레 · 근충탄',t:'심을 때 쓰는 약이라 시기 항목이 없습니다'},
+ {z:'A',p:MOTH,d:10,n:'배추좀나방 · 젠타리',t:'수확 전 일수도 횟수도 안 적혀 있습니다'}
+];
+const casesSheet=()=>`<div class="scrim" data-cases="0"></div>
+  <div class="sheet"><span class="grab"></span>
+    <div class="sh"><h2>검증 사례</h2><span class="m">오늘 2026-10-13</span>
+      <span class="spacer"></span><button class="xbtn" data-reset="1">처음 상태로</button></div>
+    <div class="cases">${CASES.map((c,i)=>{const v=judge(zone(c.z),drug(c.d),TODAY);
+      return `<button class="case" data-case="${i}"><span class="cn">${c.n}</span><span class="cd">${c.t}</span>
+        <span class="chip ${v.state}" style="grid-row:1/3;grid-column:2">${LBL[v.state]}</span></button>`}).join('')}
+      <button class="case" data-view="paper"><span class="cn">논문에서 잰 값</span>
+        <span class="cd">보여주기만 합니다. 판정에 쓰지 않습니다</span>
+        <span class="p1" style="grid-row:1/3;grid-column:2">참고</span></button>
+      <button class="case" data-view="newfield"><span class="cn">밭 등록</span>
+        <span class="cd">지도에서 필지 고르고 구역 나누기</span>
+        <span class="tag" style="grid-row:1/3;grid-column:2">처음 설정</span></button>
+    </div></div>`;
+
+/* ═══════════ PC — 같은 내 밭을 넓은 화면에서 ═══════════ */
+function pcView(){
+  const f=fld(), z=zone(S.zone), D=dist(z), row=pestRow(S.pest);
+  const vs=listFor(S.pest).map(d=>judge(z,d,TODAY)).sort((a,b)=>ORD[a.state]-ORD[b.state]);
+  const cur=vs.find(v=>v.cand.id===S.drug)||vs[0]||null;
+  const A=cur&&(cur.state==='RED'||cur.state==='AMBER'||cur.state==='NA')?alts(z,cur):[];
+  const list=pestList();
+  return `<div class="dash">
+    <div class="dhead">
+      <h1>${f.name}</h1><span class="who">${f.crop} · ${ha(f.poly).toFixed(2)} ha · 구역 ${f.zones.length}</span>
+      <span class="env"><span>오늘 <b>${TODAY}</b></span><span>기준일 <b>${BASE}</b></span></span>
+    </div>
+    <div class="dshell">
+      <div class="dcol">
+        <button class="gbar" data-guide="1">처음이면 — 말 풀이와 쓰는 순서<span class="c">›</span></button>
+        <p class="dlab">내 밭 ${FIELDS.length}개</p>
+        ${FIELDS.map(x=>`<button class="emyun" data-field="${x.id}" aria-current="${x.id===S.field}">
+          <span class="n">${x.name}</span><span class="d">${x.crop} · 구역 ${x.zones.length}</span>
+          <span class="tag" style="grid-row:1/3;grid-column:2">${ha(x.poly).toFixed(2)} ha</span>
+        </button>`).join('')}
+        <p class="dlab" style="margin-top:8px">구역</p>
+        ${f.zones.map((x,i)=>{const d=dist(x);
+          return `<button class="emyun" data-zone="${x.id}" aria-current="${x.id===S.zone}">
+            <span class="n">${zname(x)}</span>
+            <span class="d">심은 지 ${days(x.planted,TODAY)}일 · ${live(x).length?live(x).length+'번 뿌림':'아직 안 뿌림'} · ${ha(zonePoly(f,i)).toFixed(2)} ha</span>
+            <span style="grid-row:1/3;grid-column:2">${d.n?moa(d.rows[0].c)
+              :`<span class="tag no">기록 없음</span>`}</span></button>`}).join('')}
+        <p class="dlab" style="margin-top:8px">이번 농사 계통 사용 비중</p>
+        <div class="dcard">
+          ${D.n===0?`<p class="empty" style="margin:0">기록 없음</p>`
+            :`<div class="bars">${D.rows.map(r=>`<div class="bar">${moa(r.c)}
+              <span class="track"><i style="width:${Math.round(r.s*100)}%"></i></span>
+              <span class="pct">${Math.round(r.s*100)}%</span></div>`).join('')}</div>
+             <p class="caveat">뿌린 ${D.n}번 중 비율입니다. 약이 잘 듣는 정도나 저항성 수준을 뜻하지 않습니다.</p>`}
+        </div>
+      </div>
+
+      <div class="dcol">
+        <div class="dcard">
+          <div class="dtitle"><h2>구역</h2><span class="u">점선은 기록이 없는 구역</span></div>
+          ${mapSVG({sel:S.zone,vb:'58 82 294 300',par:'xMidYMid meet'})}
+        </div>
+        <div class="dcard">
+          <div class="dtitle"><h2>${zname(z)} 뿌린 기록</h2>
+            <span class="u">${z.planted}에 심음. 취소하면 바로 다시 셉니다</span></div>
+          ${logEditor(z)}
+        </div>
+        ${wxCard()}
+        ${(()=>{const pp=cur?paperFor(f.crop,S.pest,cur.cand.ing.map(([n])=>n)):null;
+          return `<div class="dcard"><div class="dtitle"><h2>논문에서 실제로 잰 값</h2>
+            <span class="p1">보여주기만 합니다</span></div>
+            ${pp?`<div class="spark">${pp.series.map(([,v])=>`<i class="${v<60?'lo':''}" style="height:${v}%"></i>`).join('')}</div>
+              <div class="sparkv">${pp.series.map(([,v])=>`<span>${v}</span>`).join('')}</div>
+              <div class="sparkx">${pp.series.map(([y])=>`<span>${y}</span>`).join('')}</div>
+              <p class="caveat">${pp.metric}(%) · ${pp.cond}<br>${esc(pp.cite)}</p>`
+             :`<p class="empty" style="margin:0">${f.crop} ${S.pest}${cur?' · '+cur.cand.ing.map(([n])=>n).join('.'):''}에
+                맞는 논문이 아직 없습니다. 작물·병해충·성분이 똑같은 자료만 보여 줍니다.</p>`}
+            </div>`})()}
+      </div>
+
+      <div class="dcol">
+        <p class="dlab">병해충 찾기</p>
+        <div class="srch"><input id="q" type="search" placeholder="이름·학명으로 찾기"
+          value="${esc(S.q||'')}" aria-label="병해충 검색">
+          ${S.q?`<button class="xbtn" data-q="">지우기</button>`:''}</div>
+        <div class="pchips">${PARTS.map(([n,v])=>`
+          <button class="pchip" data-part="${v||''}" aria-current="${(S.part||'')===(v||'')}">${n}</button>`).join('')}</div>
+        <div style="max-height:212px;overflow:auto;display:grid;gap:8px">
+          ${list.length?list.map(p=>`<button class="drow" data-pest="${esc(p[0])}" aria-current="${p[0]===S.pest}">
+            <span class="n">${p[0]}</span>
+            <span style="font-size:11px;color:var(--ink-2)">${p[3]||'부위 정보 없음'}</span>
+            ${p[4]?`<span class="tag">약 ${p[4]}건</span>`:`<span class="tag no">약 없음</span>`}</button>`).join('')
+           :`<p class="empty" style="margin:0">찾는 이름이 없습니다.</p>`}
+        </div>
+        ${VECTORS[S.pest]?`<div class="dcard"><div class="dtitle"><h2>${S.pest}</h2>
+            <span class="u">옮기는 벌레</span></div>
+          <p style="margin:0;font-size:12.5px">바이러스를 직접 고치는 약은 등록돼 있지 않습니다.</p>
+          ${VECTORS[S.pest].map(x=>`<button class="drow" data-pest="${esc(x.n)}">
+            <span class="n">${x.n}</span><span class="tag">등록된 약 ${x.rows}건</span>
+            <span class="xbtn">이 벌레로</span></button>`).join('')}
+          <p class="caveat">${esc(VECTORS[S.pest][0].src)}</p></div>`
+         :!vs.length?`<p class="empty" style="margin:0">${row&&row[4]
+            ? `모은 자료에는 ${S.pest} 약이 <b>${row[4]}건</b> 있습니다. 이 시연본에는 자세한 내용이 들어 있지 않습니다.`
+            : `${S.pest}에 등록된 약이 없습니다. 농업기술센터에 문의하세요.`}</p>`
+         :`<p class="dlab" style="margin-top:8px">${S.pest}에 쓸 수 있는 약 ${vs.length}개</p>
+          ${vs.map(v=>`<button class="drow" data-drug="${v.cand.id}" aria-current="${v.cand.id===cur.cand.id}">
+            <span class="n">${v.cand.b}</span>${moa(v.cand.ing[0][1])}${chip(v.state)}</button>`).join('')}
+          <div class="vbox ${cur.state}" style="margin-top:8px">
+            <span class="vt">${cur.cand.b} · ${LBL[cur.state]}</span>
+            <span class="vs">${esc(keyReason(cur))}</span>
+            <span style="margin-top:4px">${cur.cand.ing.map(([,m])=>moaFull(m)).join(' ')}</span></div>
+          ${cur.checks.map(c=>`<details class="check"${c.state!=='GREEN'?' open':''}>
+            <summary><span class="no">${c.no}</span><span class="tt"><b>${CTITLE[c.no]}</b>
+              <span>${esc(c.reason)}</span></span>${chip(c.state)}</summary>
+            <div class="bd">${checkBody(c)}</div></details>`).join('')}
+          ${A.length?`<p class="dlab" style="margin-top:8px">대신 쓸 수 있는 약</p>${A.map(a=>`<div class="alt">
+            <span class="n">${a.cand.b}</span>
+            <span class="w">${a.cand.ing.map(([,m])=>m).join('·')}번 계통이라 겹치지 않습니다</span>
+            <span class="r">${chip('GREEN')}${moa(a.cand.ing[0][1])}</span></div>`).join('')}`:''}
+          ${saveBlock(z,cur)}`}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ═══════════ 관내 지도 — FR-503 · P2 고도화 ═══════════ */
+const MYUN=[
+ {id:'dg',n:'대관령면',rate:71,fields:31,moa:'5',pts:[[26,120],[150,38],[322,26],[412,110],[366,222],[186,252],[42,210]],
+  crop:'고랭지 배추 22 · 씨감자 9',lx:150,ly:124},
+ {id:'jb',n:'진부면',rate:44,fields:28,moa:'5',pts:[[412,110],[562,84],[596,200],[472,272],[366,222]],
+  crop:'배추 19 · 감자 9',lx:450,ly:170},
+ {id:'bp',n:'봉평면',rate:19,fields:17,moa:'28',pts:[[186,252],[366,222],[472,272],[424,322],[200,330],[118,286]],
+  crop:'배추 11 · 토마토 6',lx:258,ly:284},
+ {id:'yp',n:'용평면',rate:12,fields:8,moa:'15',pts:[[42,210],[186,252],[118,286],[50,268]],
+  crop:'배추 8',lx:96,ly:252}
+];
+const band=r=>r>=60?'hi':r>=35?'mid':'lo';
+const bandFill=r=>r>=60?'var(--bad)':r>=35?'var(--warn)':'var(--ok)';
+const prng=s=>()=>(s=s*16807%2147483647)/2147483647;
+function inPoly(x,y,p){let c=false;
+  for(let i=0,j=p.length-1;i<p.length;j=i++){const[xi,yi]=p[i],[xj,yj]=p[j];
+    if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
+function scatter(p,n,seed){
+  const r=prng(seed),xs=p.map(a=>a[0]),ys=p.map(a=>a[1]);
+  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const out=[];let g=0;
+  while(out.length<n&&g++<n*80){const x=x0+r()*(x1-x0),y=y0+r()*(y1-y0);
+    if(inPoly(x,y,p))out.push([x,y])}
+  return out;
+}
+function dashView(){
+  const sel=MYUN.find(m=>m.id===S.myun), tot=MYUN.reduce((a,m)=>a+m.fields,0);
+  const worst=MYUN.reduce((a,b)=>a.rate>=b.rate?a:b);
+  return `<div class="dash">
+    <div class="dhead">
+      <h1>관내 계통 사용 비중</h1>
+      <span class="p2">다음 단계 기능</span>
+      <span class="who">평창군 농업기술센터 지도사용. 농가 화면이 아닙니다</span>
+      <span class="env"><span>등록 밭 <b>${tot}</b>곳</span><span>집계 <b>2026 상반기</b></span>
+        <span>기준일 <b>${BASE}</b></span></span>
+    </div>
+    <div class="dshell">
+      <div class="dcol">
+        <p class="dlab">면별 계통 쏠림</p>
+        ${MYUN.map(m=>`<button class="emyun" data-myun="${m.id}" aria-current="${m.id===S.myun}">
+          <span class="n">${m.n}</span><span class="d">밭 ${m.fields}곳 · ${m.crop}</span>
+          <span class="rate ${band(m.rate)}" style="grid-row:1/3;grid-column:2">${m.rate}%</span></button>`).join('')}
+        <p class="caveat">개별 농가·필지 식별 정보는 표시하지 않습니다. 면 단위 집계만 씁니다.</p>
+      </div>
+      <div class="dcol">
+        <div class="kpis">
+          <div class="kpi"><div class="k">가장 쏠린 면</div><div class="v">${worst.n}</div>
+            <div class="s">${worst.moa}번 계통 ${worst.rate}%</div></div>
+          <div class="kpi"><div class="k">경보 대상 면</div><div class="v">${MYUN.filter(m=>m.rate>=35).length} / ${MYUN.length}</div>
+            <div class="s">쏠림 35% 이상</div></div>
+          <div class="kpi"><div class="k">집계 살포</div><div class="v">1,184</div>
+            <div class="s">최근 3회분 · 밭 ${tot}곳</div></div>
+        </div>
+        <div class="dcard">
+          <div class="dtitle"><h2>최근 3번 뿌린 약 중 같은 계통 비율</h2>
+            <span class="u">점 하나가 밭 하나</span></div>
+          <svg class="d-map" viewBox="0 0 620 350" role="img"
+            aria-label="평창군 네 개 면의 작용기작 편중도를 색으로 보여주는 지도">
+            <rect width="620" height="350" rx="9" fill="var(--sunken)"/>
+            ${MYUN.map(m=>{const on=m.id===S.myun;
+              return `<g style="cursor:pointer" data-myun="${m.id}">
+                <polygon points="${m.pts.map(p=>p.join(',')).join(' ')}" fill="${bandFill(m.rate)}"
+                  fill-opacity="${on?.46:.24}" stroke="${on?'var(--accent)':'var(--app)'}"
+                  stroke-width="${on?3.2:2.4}" stroke-linejoin="round"/>
+                ${scatter(m.pts,m.fields,m.n.charCodeAt(0)*977+m.fields).map(([x,y])=>
+                  `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="var(--ink)" fill-opacity=".42"/>`).join('')}
+                <text x="${m.lx}" y="${m.ly}" font-size="14.5" font-weight="700" fill="var(--ink)">${m.n}</text>
+                <text x="${m.lx}" y="${m.ly+18}" font-size="12" font-family="IBM Plex Mono"
+                  fill="${bandFill(m.rate)}">${m.moa}번 계통 ${m.rate}%</text>
+              </g>`}).join('')}
+          </svg>
+          <div class="legend">
+            <span><i style="background:var(--bad);opacity:.55"></i>60% 이상, 교체 교육 우선</span>
+            <span><i style="background:var(--warn);opacity:.55"></i>35~59%, 관찰</span>
+            <span><i style="background:var(--ok);opacity:.55"></i>35% 미만, 양호</span>
+          </div>
+        </div>
+      </div>
+      <div class="dcol">
+        <p class="dlab">선택한 면</p>
+        <div class="prio">
+          <div class="ph"><span class="n">${sel.n}</span>
+            <span class="rate ${band(sel.rate)}">${sel.rate}%</span></div>
+          <dl><dt>등록 밭</dt><dd>${sel.fields}곳</dd>
+            <dt>쏠린 계통</dt><dd>${sel.moa}번 (IRAC ${sel.moa})</dd>
+            <dt>작물</dt><dd style="font-weight:500">${sel.crop}</dd></dl>
+          <p style="margin:0;font-size:12.5px;color:var(--ink-2)">
+            ${sel.rate>=60?'최근 세 번 뿌린 약의 절반 이상이 한 계통에 몰렸습니다. 교체 교육 1순위.'
+             :sel.rate>=35?'한 계통으로 쏠리고 있습니다. 다음 분기 관찰 대상.'
+             :'계통이 고르게 쓰이고 있습니다.'}</p>
+        </div>
+        <div class="quote">개별 농가는 자기 밭만 봅니다. 저항성은 <b>지역 단위로 퍼집니다.</b>
+          옆 밭이 전부 같은 계통을 쓰면 혼자 바꿔도 이미 저항성을 가진 벌레가 넘어옵니다.</div>
+        <p class="caveat">등록된 밭의 살포 기록을 면 단위로 모아서 센 값입니다.<br>
+          <b>지금 숫자는 시연용 예시입니다.</b> 실제 수치는 기록이 쌓인 뒤에 나옵니다.<br>
+          이 화면은 얼마나 쏠렸는지만 말합니다. 저항성으로 이어지는지는 따로 확인해야 합니다.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ═══════════ 라우팅 ═══════════ */
+const THESIS={
+ O:'',
+ A:'<b>휴대폰.</b> 지도에서 구역을 고르고 시트에서 약을 누릅니다. 두 번이면 결과가 나옵니다. 구역을 바꾸면 같은 약이 구역마다 다르게 나옵니다.',
+ B:'<b>PC.</b> 같은 서비스, 같은 내 밭. 지도·기록·날씨·결과를 한 화면에 폅니다.',
+ C:'<b>농업기술센터 화면 (FR-503 · P2).</b> 농가가 쓰는 화면이 아닙니다. 해커톤 범위 밖이라 발전 가능성으로만 둡니다.'
+};
+/* 처음 쓰는 사람에게 — 말 풀이와 쓰는 순서 */
+const STEPS=[
+  ['밭 등록','지도에서 내 밭을 고르고 구역을 나눕니다. 작물과 심은 날을 넣습니다.'],
+  ['병해충 찾기','잎·줄기·뿌리 중 어디가 이상한지 고르거나, 이름으로 찾습니다.'],
+  ['약 고르기','그 병해충에 등록된 약만 나옵니다.'],
+  ['판정 보기','네 가지를 확인해서 가능·주의·불가가 나옵니다. 번호를 누르면 이유가 나옵니다.'],
+  ['뿌리고 기록','뿌린 날과 약을 남깁니다. 이 기록이 다음 판정의 근거가 됩니다.']];
+const LEGEND=[
+  ['GREEN','가능','네 가지를 다 통과했습니다.'],
+  ['AMBER','주의','계통이 겹칩니다. 써도 법에 걸리진 않지만 효과가 떨어집니다.'],
+  ['RED','불가','법·출하 문제입니다. 쓰면 안 됩니다.'],
+  ['UNKNOWN','확인 필요','자료에 값이 없습니다. 빈칸을 통과로 넘기지 않습니다.'],
+  ['NA','심을 때','심을 때 땅에 넣는 약입니다. 수확 전 일수라는 항목 자체가 없습니다.']];
+const TERMS=[
+  ['안전사용기준','수확 며칠 전까지, 최대 몇 번 뿌릴 수 있는지를 법으로 정한 것. 어기면 출하를 못 합니다.'],
+  ['수확 전 일수','마지막으로 뿌린 날부터 수확까지 비워야 하는 날 수.'],
+  ['계통','약이 병균·벌레를 죽이는 방식. 같은 계통만 계속 쓰면 그 방식에 버티는 놈만 남아 안 듣게 됩니다.'],
+  ['PLS','등록되지 않은 약은 쓸 수 없다는 제도. 2019년부터 모든 농산물에 적용됩니다.'],
+  ['희석배수','물에 몇 배로 타는지. 2000배면 물 20리터에 약 10밀리리터입니다.'],
+  ['심을 때 쓰는 약','모종을 심을 때 땅에 섞거나 심는 구멍에 넣는 약.']];
+
+function guideSVG(){
+  return `<svg viewBox="0 0 320 296" role="img" aria-label="고른 약 하나가 네 가지 확인을 거칩니다. 등록·시기·횟수는 법과 출하 문제라 하나라도 걸리면 불가가 되고, 계통은 효과 문제라 겹치면 주의가 됩니다. 넷 다 통과해야 가능이 됩니다.">
+    <defs><marker id="gar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/></marker></defs>
+    <g fill="none" stroke="currentColor" stroke-width="1.2" marker-end="url(#gar)">
+      <path d="M160 36 V50"/><path d="M60 52 V68"/><path d="M260 52 V68"/>
+      <path d="M92 136 V180"/><path d="M228 136 V180"/>
+      <path d="M28 136 V264 H122"/><path d="M292 136 V264 H198"/>
+    </g>
+    <path d="M60 52 H260" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <g font-family="var(--f)" text-anchor="middle">
+      <rect x="110" y="8" width="100" height="28" rx="7" fill="var(--app)" stroke="currentColor" stroke-width="1.2"/>
+      <text x="160" y="27" font-size="12.5" font-weight="600" fill="currentColor">고른 약 하나</text>
+
+      <rect x="8" y="70" width="104" height="66" rx="9" fill="var(--app)" stroke="currentColor" stroke-width="1.2"/>
+      <text x="60" y="90" font-size="11.5" font-weight="600" fill="currentColor">법 · 출하</text>
+      <text x="60" y="110" font-size="12" fill="currentColor">①등록 ②시기</text>
+      <text x="60" y="128" font-size="12" fill="currentColor">③횟수</text>
+
+      <rect x="208" y="70" width="104" height="66" rx="9" fill="var(--app)" stroke="currentColor" stroke-width="1.2"/>
+      <text x="260" y="90" font-size="11.5" font-weight="600" fill="currentColor">효과</text>
+      <text x="260" y="110" font-size="12" fill="currentColor">④계통</text>
+      <text x="260" y="128" font-size="12" fill="currentColor">겹침 확인</text>
+
+      <rect x="56" y="182" width="72" height="32" rx="7" fill="var(--bad-bg)"/>
+      <text x="92" y="203" font-size="12.5" font-weight="700" fill="var(--bad)">불가</text>
+      <rect x="192" y="182" width="72" height="32" rx="7" fill="var(--warn-bg)"/>
+      <text x="228" y="203" font-size="12.5" font-weight="700" fill="var(--warn)">주의</text>
+      <rect x="124" y="248" width="72" height="32" rx="7" fill="var(--ok-bg)"/>
+      <text x="160" y="269" font-size="12.5" font-weight="700" fill="var(--ok)">가능</text>
+    </g>
+    <g font-family="var(--f)" font-size="11" fill="currentColor">
+      <text x="98" y="164">하나라도</text><text x="98" y="177">걸리면</text>
+      <text x="234" y="164">계통이</text><text x="234" y="177">겹치면</text>
+      <text x="36" y="258">통과</text><text x="284" y="258" text-anchor="end">통과</text>
+    </g>
+  </svg>`;
+}
+const WHY=[
+  ['99.8%','전국 고랭지 감자 중 강원 비중','강원특별자치도'],
+  ['92.0%','전국 고랭지 배추 중 강원 비중','강원특별자치도'],
+  ['42.3%','평창 배추좀나방 살충 효과. 성주·거창은 100%','영농자재신문']];
+const DATASET=[
+  ['4,133줄','병해충별 등록약 (①등록)','PSIS'],
+  ['3,870줄','약 사용 규칙 — 수확 전 일수·최대 횟수 (②시기 ③횟수)','PSIS'],
+  ['652개','약별 계통 코드 (④계통)','PSIS'],
+  ['116개','병해충 도감 · 사진 185장','NCPMS']];
+const USERS=[
+  ['감자·배추·토마토 농가','밭에서 약을 뿌리기 전에 휴대폰으로 확인합니다. 주 사용자입니다.'],
+  ['처음 재배하는 분','병해충 이름과 약 용어가 낯섭니다. 도감 사진과 말 풀이로 찾습니다.'],
+  ['기억으로 세는 분','몇 번 뿌렸는지 기억에 의존합니다. 구역별 기록이 대신 셉니다.'],
+  ['여러 구역을 관리하는 분','구역마다 심은 날과 횟수가 다릅니다. 구역을 바꾸면 판정이 다시 나옵니다.']];
+const OUTSCOPE=['병명 자동 진단','저항성 수준 예측','약효·약해 판정','관수·시설 제어','상담사 전용 화면'];
+
+function overview(){
+  return `<div class="ov">
+    <div>
+      <h1>뿌리기 전에, 이 약을 지금 이 구역에 써도 될까요</h1>
+      <p class="lede">농가는 지금 이 네 가지를 각각 다른 곳에서 확인해야 합니다.
+        팜가디언은 한 화면에서 확인하고 근거 원문까지 보여줍니다.
+        감자·배추·토마토 3종이 대상입니다.</p>
+    </div>
+
+    <div class="ovs"><h2>왜 만들었나요</h2>
+      <p class="lede">농약허용기준강화제도(PLS)가 전면 시행되면서, 작물에 등록되지 않은 약은
+        쓸 수 없고 안전사용기준을 어기면 출하가 막힙니다. 기준은 약마다 작물마다 다릅니다.
+        확인하려면 농약안전정보시스템과 약 포장지, 그리고 내가 언제 몇 번 뿌렸는지를
+        각각 따로 봐야 합니다. 팜가디언은 이 확인을 한 화면으로 모으고,
+        그렇게 판정한 근거 원문을 함께 보여 줍니다.</p>
+    </div>
+
+    <div class="ovs"><h2>누가 쓰나요</h2>
+      <div class="ovg two">${USERS.map(([n,d])=>`<div class="ovc">
+        <span class="k">${n}</span><span class="v">${d}</span></div>`).join('')}</div>
+    </div>
+
+    <div class="ovs"><h2>왜 강원인가요</h2>
+      <div class="ovg">${WHY.map(([n,k,src])=>`<div class="ovc">
+        <span class="big">${n}</span><span class="v">${k}</span>
+        <span class="src">${src}</span></div>`).join('')}</div>
+    </div>
+
+    <div class="ovs"><h2>판정은 네 가지를 봅니다</h2>
+      <figure class="gfig" style="max-width:420px">${guideSVG()}
+        <figcaption>①②③은 걸리면 못 쓰고, ④는 겹쳐도 쓸 수는 있습니다.</figcaption></figure>
+      <div class="ovg">${LEGEND.map(([k,n,d])=>`<div class="ovc">
+        <span class="k"><span class="chip ${k}">${n}</span></span>
+        <span class="v">${d}</span></div>`).join('')}</div>
+    </div>
+
+    <div class="ovs"><h2>쓰는 순서</h2>
+      <div class="ovtab">${STEPS.map(([n,d],i)=>`<div class="r">
+        <b>${i+1}. ${n}</b><span>${d}</span></div>`).join('')}</div>
+    </div>
+
+    <div class="ovs"><h2>무엇으로 판정하나요</h2>
+      <div class="ovg">${DATASET.map(([n,k,src])=>`<div class="ovc">
+        <span class="big">${n}</span><span class="v">${k}</span>
+        <span class="src">${src}</span></div>`).join('')}</div>
+      <p class="ovfoot">공공데이터를 내려받아 숫자로 정규화했습니다. 판정 중에 외부 API를 부르지 않아
+        같은 입력·같은 기준일이면 늘 같은 결과가 나옵니다.<br>
+        PSIS 농약안전정보시스템 · NCPMS 국가농작물병해충관리시스템(CC-BY-NC) ·
+        농림축산식품부 PLS 안내 · 기상청 단기예보</p>
+    </div>
+
+    <div class="ovs"><h2>화면 세 가지 — 위 탭에서 봅니다</h2>
+      <div class="ovtab">
+        <div class="r"><b>모바일</b><span>농가가 밭에서 쓰는 화면. 지도에서 구역을 고르고
+          시트에서 약을 누르면 두 번 만에 결과가 나옵니다.</span></div>
+        <div class="r"><b>PC 화면</b><span>같은 서비스, 같은 내 밭. 지도·기록·날씨·결과를 한 화면에 폅니다.</span></div>
+        <div class="r"><b>농업기술센터</b><span>면 단위로 계통 사용 비중을 모아 보는 화면.
+          농가용이 아니고 해커톤 범위 밖입니다. 발전 가능성으로만 둡니다.</span></div>
+      </div>
+      <p class="ovfoot">세 화면 모두 눌러서 바꿔 볼 수 있습니다. 판정이 실제로 돌아갑니다.
+        모바일 화면 위의 「처음이면」을 누르면 농약 용어 풀이가 나옵니다.</p>
+    </div>
+
+    <div class="ovs"><h2>하지 않는 것</h2>
+      <div class="ovno">${OUTSCOPE.map(x=>`<span>${x}</span>`).join('')}</div>
+      <p class="ovfoot">계통 사용 비중은 <b>기록에서 센 비율</b>입니다. 저항성 수준이 아닙니다.
+        저항성은 생물검정으로 재야 알 수 있습니다.</p>
+    </div>
+
+    <p class="ovfoot">앵커 × COSS 공유대학 융합 해커톤 출품작 · 팀 파랑새 ·
+      화면에 쓰인 살포 기록과 면 단위 수치는 시연용 예시입니다. 실제 측정값이 아닙니다.</p>
+  </div>`;
+}
+function guideCard(){
+  return `<div class="gwrap" data-guide="0">
+    <div class="gcard" data-guide="1" role="dialog" aria-label="말 풀이와 쓰는 순서">
+      <div class="ghead"><h2>말 풀이와 쓰는 순서</h2>
+        <button class="xbtn" data-guide="0">닫기</button></div>
+
+      <div class="gsec"><h3>쓰는 순서</h3>
+        ${STEPS.map(([n,d],i)=>`<div class="gstep"><b>${i+1}</b>
+          <span class="n">${n}</span><span class="d">${d}</span></div>`).join('')}</div>
+
+      <div class="gsec"><h3>판정은 네 가지를 봅니다</h3>
+        <figure class="gfig">${guideSVG()}
+          <figcaption>①②③은 법과 출하 문제라 걸리면 못 쓰고,
+            ④는 효과 문제라 겹쳐도 쓸 수는 있습니다.</figcaption></figure></div>
+
+      <div class="gsec"><h3>판정 다섯 가지</h3>
+        <div class="gleg">${LEGEND.map(([k,n,d])=>
+          `<span class="chip ${k}">${n}</span><span>${d}</span>`).join('')}</div></div>
+
+      <div class="gsec"><h3>말 풀이</h3>
+        <dl class="gterm">${TERMS.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join('')}</dl></div>
+
+      <p class="caveat">화면에 나오는 숫자는 공공 자료(PSIS 농약안전정보시스템, NCPMS 병해충 도감)에서
+        가져옵니다. 최종 확인은 약 봉지의 라벨입니다.</p>
+    </div></div>`;
+}
+
+let S={proto:'O',view:'home',stack:[],field:1,zone:'A',pest:MOTH,drug:1,part:null,q:'',
+  saved:false,cases:false,bk:null,myun:'dg',wx:true,dup:false,pick:null,ocr:false,ocrPick:null,
+  guide:false, nf:{crop:'배추',planted:'2026-09-01',n:3}};
+const go=v=>{S.stack.push(S.view); S.view=v};
+
+function render(){
+  document.getElementById('thesis').innerHTML=THESIS[S.proto];
+  for(const b of document.querySelectorAll('.tabs button'))
+    b.setAttribute('aria-current',String(b.dataset.proto===S.proto));
+  const st=document.getElementById('stage');
+  st.className=S.proto==='A'?'stage':'stage wide';
+  const G=S.guide?guideCard():'';
+  if(S.proto==='O'){st.innerHTML=overview()+G; return}
+  if(S.proto==='B'){st.innerHTML=pcView()+G; return}
+  if(S.proto==='C'){st.innerHTML=dashView()+G; return}
+  const V={pest:aPest,vector:aVector,drugs:aDrugs,detail:aDetail,logs:aLogs,paper:aPaper,
+           newfield:aNewField,setup:aSetup};
+  st.innerHTML=`<div class="app">${(V[S.view]||aHome)()}</div>`+G;
+}
+function refocusQ(){
+  const q=document.getElementById('q');
+  if(q){q.focus(); q.setSelectionRange(q.value.length,q.value.length)}
+}
+document.addEventListener('input',e=>{
+  if(e.target.id!=='q')return;
+  S.q=e.target.value; render(); refocusQ();
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.id==='nfc') S.nf.crop=t.value;
+  else if(t.id==='nfd') S.nf.planted=t.value;
+  else if(t.dataset.planted){const z=zone(t.dataset.planted); if(t.value){z.planted=t.value; render()}}
+});
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-proto],[data-view],[data-back],[data-zone],[data-field],[data-drug],'+
+    '[data-pest],[data-part],[data-q],[data-cases],[data-case],[data-save],[data-dup],[data-bk],'+
+    '[data-wx],[data-void],[data-add],[data-ocr],[data-ocrpick],[data-ocrsave],[data-reset],'+
+    '[data-myun],[data-parcel],[data-nfn],[data-newfield],[data-split],[data-guide]');
+  if(!t)return;
+  const d=t.dataset, pc=S.proto==='B', z=zone(S.zone);
+
+  if(d.guide!=null){const g=d.guide==='1'; if(g===S.guide)return; S.guide=g}
+  else if(d.proto){S.proto=d.proto; S.view='home'; S.stack=[]; S.saved=false; S.cases=false; S.dup=false; S.guide=false}
+  else if(d.view!=null){S.cases=false; if(S.proto==='A')go(d.view)}
+  else if(d.back!=null){S.view=S.stack.pop()||'home'; S.saved=false; S.bk=null; S.dup=false; S.ocr=false}
+  else if(d.zone){S.zone=d.zone; S.saved=false; S.dup=false}
+  else if(d.field){S.field=+d.field; S.zone=Z()[0].id; S.saved=false; S.dup=false}
+  else if(d.drug){S.drug=+d.drug; S.pest=drug(+d.drug).pest; S.saved=false; S.dup=false; S.bk=null;
+    if(!pc&&S.view!=='detail')go('detail')}
+  else if(d.pest!=null){
+    S.pest=d.pest; S.q=''; S.saved=false; S.dup=false; S.bk=null;
+    const L=listFor(S.pest); S.drug=L.length?L[0].id:null;
+    if(!pc){ if(VECTORS[S.pest]&&S.view!=='vector') go('vector');
+             else if(S.view!=='drugs') go('drugs'); }}
+  else if(d.part!=null){S.part=d.part||null}
+  else if(d.q!=null){S.q=''}
+  else if(d.cases!=null) S.cases=d.cases==='1';
+  else if(d.case!=null){const c=CASES[+d.case];
+    S.zone=c.z; S.pest=c.p; S.drug=c.d; S.saved=false; S.cases=false; S.dup=false; S.bk=null;
+    if(!pc){S.stack=[]; S.view='detail'}}
+  else if(d.save!=null){
+    if(d.save==='dup') S.dup=true;
+    else{addLog(z,TODAY,S.drug); S.saved=true; S.dup=false}}
+  else if(d.dup!=null) S.dup=d.dup==='1';
+  else if(d.bk!=null){const k=+d.bk; S.bk=S.bk===k?null:k}
+  else if(d.wx!=null) S.wx=d.wx==='1';
+  else if(d.void!=null){voidLog(+d.void); S.saved=false}
+  else if(d.add!=null){const fd=document.getElementById('fd'),fu=document.getElementById('fu');
+    if(fd&&fd.value){addLog(z,fd.value,+fu.value); S.saved=false}}
+  else if(d.ocr!=null){S.ocr=d.ocr==='1'; S.ocrPick=null}
+  else if(d.ocrpick!=null) S.ocrPick=+d.ocrpick;
+  else if(d.ocrsave!=null){const od=document.getElementById('od');
+    if(S.ocrPick&&od&&od.value){addLog(z,od.value,S.ocrPick); S.ocr=false; S.ocrPick=null}}
+  else if(d.reset!=null){resetAll(); S.field=1; S.zone='A'; S.saved=false; S.dup=false}
+  else if(d.myun) S.myun=d.myun;
+  else if(d.parcel!=null) S.pick=+d.parcel;
+  else if(d.nfn!=null) S.nf.n=Math.min(6,Math.max(1,S.nf.n+ +d.nfn));
+  else if(d.newfield!=null){
+    const pa=PARCELS.find(x=>x.id===S.pick); if(!pa)return;
+    const id=Math.max(...FIELDS.map(f=>f.id))+1;
+    FIELDS.push({id,parcel:pa.id,name:`필지 ${pa.id} 밭`,crop:S.nf.crop,poly:pa.p,
+      zones:Array.from({length:S.nf.n},(_,i)=>({id:String.fromCharCode(65+i),planted:S.nf.planted,logs:[]}))});
+    S.field=id; S.zone='A'; S.pick=null; S.stack=[]; S.view='home'}
+  else if(d.split!=null){
+    const f=fld(), n=Math.min(6,Math.max(1,f.zones.length+ +d.split));
+    if(f.zones.some(x=>live(x).length))return;
+    f.zones=Array.from({length:n},(_,i)=>f.zones[i]
+      ||{id:String.fromCharCode(65+i),planted:f.zones[0].planted,logs:[]});
+    if(!f.zones.some(x=>x.id===S.zone))S.zone=f.zones[0].id}
+  render();
+});
+render();
+</script>

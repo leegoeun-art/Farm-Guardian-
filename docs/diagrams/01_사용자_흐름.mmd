@@ -1,0 +1,36 @@
+flowchart TD
+    START(["팜가디언 시작"])
+    FIELD{"등록한 밭·구역이 있는가?"}
+    REGISTER["주소로 팜맵 경계 조회·선택"]
+    SPLIT["개수·방향으로 균등 분할 또는 직접 선 그리기"]
+    BOUNDARY["경계 드래그 수정·최종 구역 저장"]
+    CROP["작물 등록·정식일 선택 입력"]
+    ZONE["사용할 구역 선택"]
+    PEST["도감·이름 검색·매개충 안내로 병해충 직접 선택 또는 미선택 진행"]
+    DRUG["약제 이름 검색·목록 선택"]
+    CHECK["네 체크 확인: 등록·시기·횟수·작용기작"]
+    EVIDENCE["상태·사유·수확 가능 날짜·사용 전후 횟수·근거 확인"]
+    WEATHER["기본 날씨 P0: 강수 예보·발표 시각·출처 또는 조회 실패 안내"]
+    RECORD["실제 살포한 구역·약제·날짜 확인 후 살포 기록 저장"]
+    HISTORY["이력 조회·필요 시 취소·유효 기록 집계 확인"]
+    PAST["과거 실제 살포 이력 직접 입력 P0"]
+    OCR["포장지 OCR P1: 촬영·약제명 후보 확인·제품 선택"]
+    OCR_INFO["실제 살포 구역·날짜를 사용자 확인 또는 입력"]
+
+    START --> FIELD
+    FIELD -->|없음| REGISTER
+    REGISTER --> SPLIT --> BOUNDARY --> CROP --> ZONE
+    FIELD -->|있음| ZONE
+    ZONE --> PEST --> DRUG --> CHECK --> EVIDENCE
+    ZONE -.-> WEATHER
+    EVIDENCE -->|실제 살포 기록 입력| RECORD --> HISTORY
+    ZONE -->|판정 없이 과거 기록 입력| PAST --> RECORD
+    ZONE -.->|P1 이력 입력 보조| OCR --> OCR_INFO --> RECORD
+
+    classDef later fill:#fff3cd,stroke:#946200,color:#352500;
+    class OCR,OCR_INFO later;
+
+    %% 날씨 조회 실패는 판정·기록을 막지 않는다.
+    %% 판정 조회·이번 1회 가정은 실제 살포 기록을 만들지 않는다.
+    %% OCR은 판정 입구가 아니며 포장지 날짜를 살포 날짜로 사용하지 않는다.
+    %% 저장·취소의 중복·실패·결과 불명확 처리는 요구사항 4.6절을 따른다.

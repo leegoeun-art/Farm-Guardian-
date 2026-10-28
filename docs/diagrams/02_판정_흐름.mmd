@@ -1,0 +1,64 @@
+flowchart TD
+    INPUT["구역·작물·약제·병해충 선택 상태·기준 날짜·유효 이력·원자료·규칙"]
+    CALC["FR-302: 네 체크를 각각 계산"]
+    C1["① 등록: 확인된 작물·병해충·약제 등록조건"]
+    C2["② 시기: 확인된 수확 전 일수·추가 조건으로 날짜 계산"]
+    C3["③ 횟수: 기존 사용에 이번 1회 가정 포함·한도 비교"]
+    C4["④ 작용기작: 이번 1회 가정을 포함해 확인된 반복규칙 비교"]
+    NOTE1["병해충 미선택·등록 근거 부족이면 ① 확인 필요"]
+    NOTE2["정식일 없음만으로 ② 확인 필요 처리하지 않음"]
+    NOTE34["이력 0건·필요한 이력 또는 기준 부족이면 관련 ③④ 확인 필요"]
+    RESULT["네 체크별 상태·사유·근거·부족한 정보 수집"]
+    IS_RED{"①②③에 확인된 불가가 있는가?"}
+    RED["최종 불가 RED"]
+    IS_NA{"심을 때 쓰는 약(NA)인 체크가 있는가?"}
+    NA["최종 심을 때 NA"]
+    IS_UNKNOWN{"확인 필요인 체크가 있는가?"}
+    UNKNOWN["최종 확인 필요 UNKNOWN"]
+    IS_AMBER{"④ 반복규칙 초과인가?"}
+    AMBER["최종 주의 AMBER"]
+    GREEN["최종 가능 GREEN"]
+    LIST["FR-304: 가능·주의·확인 필요·불가 순으로 전체 약제 표시"]
+    EVIDENCE["FR-305: 체크별 근거 원문·출처·기준일 또는 누락 사유 표시"]
+    ALT["FR-306: 다른 작용기작의 등록 약제를 판정해 가능인 대안만 표시"]
+    HAS_ALT{"대안이 있는가?"}
+    ALT_LIST["대안 목록 확인"]
+    CONTACT["대안 없음·농업기술센터 문의 안내"]
+    CONSISTENCY["FR-303: 같은 입력·원자료·규칙·기준일이면 같은 결과"]
+
+    INPUT --> CALC
+    CALC --> C1 & C2 & C3 & C4
+    NOTE1 -.-> C1
+    NOTE2 -.-> C2
+    NOTE34 -.-> C3 & C4
+    C1 & C2 & C3 & C4 --> RESULT
+    RESULT --> IS_RED
+    IS_RED -->|예| RED
+    IS_RED -->|아니오| IS_NA
+    IS_NA -->|예| NA
+    IS_NA -->|아니오| IS_UNKNOWN
+    IS_UNKNOWN -->|예| UNKNOWN
+    IS_UNKNOWN -->|아니오| IS_AMBER
+    IS_AMBER -->|예| AMBER
+    IS_AMBER -->|아니오| GREEN
+    RED & NA & UNKNOWN & AMBER & GREEN --> LIST --> EVIDENCE
+    RED & AMBER --> ALT --> HAS_ALT
+    HAS_ALT -->|예| ALT_LIST
+    HAS_ALT -->|아니오| CONTACT
+    CONSISTENCY -.-> CALC
+
+    classDef ok fill:#e6f4ea,stroke:#137333,color:#14351c;
+    classDef warn fill:#fff3cd,stroke:#946200,color:#352500;
+    classDef unknown fill:#eef0f3,stroke:#59636f,color:#202830;
+    classDef bad fill:#fce8e6,stroke:#c5221f,color:#501c1c;
+    class GREEN ok;
+    class AMBER warn;
+    class NA unknown;
+    class UNKNOWN unknown;
+    class RED bad;
+
+    %% 체크를 모두 계산한 뒤 최종 상태를 합산한다. 불가가 있어도 다른 체크를 생략하지 않는다.
+    %% 최종 상태 우선순위 RED > NA > UNKNOWN > AMBER > GREEN과 목록 정렬 순서는 다르다.
+    %% NA는 parse_status=stage(심을 때 쓰는 약). 값이 없는 UNKNOWN과 구분한다. 2026-10-27 확정.
+    %% 파싱 실패·자료 없음은 관련 체크만 확인 필요. 없는 근거를 만들지 않는다.
+    %% 횟수 합산 단위·② 추가 조건·④ 규칙 충돌·혼합제·충분한 이력은 요구사항 8절의 검증 대상이다.
