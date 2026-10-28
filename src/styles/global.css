@@ -245,6 +245,7 @@ body {
   max-height: 54%;
   overflow-y: auto;
   z-index: 10;
+  transition: max-height .35s cubic-bezier(.4,0,.2,1);
 }
 .grab {
   width: 34px; height: 4px;
@@ -1265,18 +1266,24 @@ table.ing td.out { color: var(--bad); font-weight: 600 }
 .bottom-sheet.open {
   max-height: 70%;
   animation: slideUp .22s cubic-bezier(.4,0,.2,1);
-  transition: max-height .3s cubic-bezier(.4,0,.2,1);
 }
 .bottom-sheet.open.expanded {
   max-height: 92%;
 }
 .bs-handle {
-  width: 36px; height: 4px;
-  border-radius: 2px;
+  width: 40px; height: 5px;
+  border-radius: 3px;
   background: var(--line);
-  margin: 4px auto 8px;
-  cursor: pointer;
+  margin: 6px auto 10px;
+  cursor: grab;
+  touch-action: none;
+  transition: background .15s, width .15s;
 }
+.bs-handle:hover, .bs-handle:active {
+  background: var(--accent);
+  width: 52px;
+}
+.bs-handle:active { cursor: grabbing; }
 .bs-inner { display: flex; flex-direction: column; gap: 12px }
 .bs-header { display: flex; align-items: center; justify-content: space-between }
 .bs-title { margin: 0; font: 700 17px/1 var(--f); letter-spacing: -.01em }
@@ -1678,3 +1685,290 @@ table.ing td.out { color: var(--bad); font-weight: 600 }
 
 /* ── empty 확장 ───────────────────────────────── */
 .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 24px }
+
+/* ── FAB (Floating Action Button) ────────────── */
+.fab {
+  position: absolute;
+  bottom: calc(var(--nav-h) + 16px);
+  right: 16px;
+  z-index: 20;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 20px rgba(74,154,110,.38), 0 1px 4px rgba(74,154,110,.22);
+  transition: transform .12s, box-shadow .12s;
+}
+.fab:hover { transform: scale(1.06); box-shadow: 0 6px 26px rgba(74,154,110,.5) }
+.fab:active { transform: scale(.94) }
+
+/* ── 폼 그룹 ──────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fg-label {
+  font: 600 12px/1 var(--f);
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.fg-input {
+  font: 400 14px/1.2 var(--f);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--app);
+  color: var(--ink);
+  width: 100%;
+  transition: border-color .12s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.fg-input:focus { outline: none; border-color: var(--accent) }
+.fg-input::placeholder { color: var(--ink-3) }
+
+/* ── 셋업 페이지 확장 ─────────────────────────── */
+.setup-field-header {
+  background: var(--sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+}
+.sfh-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.sfh-name { font: 700 18px/1 var(--f); display: block; margin-bottom: 4px }
+.sfh-crop { font: 600 12px/1 var(--f); color: var(--ok); background: var(--ok-bg); padding: 3px 8px; border-radius: 4px; display: inline-block }
+.sfh-zones { font: 500 12px/1 var(--f); color: var(--ink-3); white-space: nowrap; margin-top: 4px }
+.sfh-address { margin: 0; font: 400 12px/1.4 var(--f); color: var(--ink-3) }
+
+.setup-zone-section { display: flex; flex-direction: column; gap: 10px }
+.szs-header { display: flex; align-items: center; justify-content: space-between }
+
+.zone-edit-list { display: flex; flex-direction: column; gap: 8px }
+.zone-edit-card {
+  background: var(--sunken);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color .12s;
+}
+.zone-edit-card.active { border-color: var(--accent) }
+.zec-top { display: flex; align-items: center; justify-content: space-between; gap: 8px }
+.zec-left { display: flex; align-items: center; gap: 10px }
+.zec-badge {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font: 700 13px/1 var(--f);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.zone-edit-card.active .zec-badge { background: var(--accent); box-shadow: 0 2px 8px rgba(74,154,110,.3) }
+.zec-name { font: 600 14px/1 var(--f); display: block }
+.zec-logs { font: 400 11px/1 var(--f); color: var(--ink-3); display: block; margin-top: 2px }
+.zec-actions { display: flex; gap: 6px; flex: none }
+.zec-planted { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; border-top: 1px dashed var(--line) }
+.zec-planted-label { font: 500 11.5px/1 var(--f); color: var(--ink-3); flex: none }
+.zec-planted-val { font: 400 13px/1 var(--f); color: var(--ink-2) }
+.zec-date-edit { display: flex; gap: 6px; align-items: center; flex: 1; justify-content: flex-end }
+
+.zone-add-btn {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  font: 600 13px/1 var(--f);
+  color: var(--accent);
+  background: none;
+  border: 1.5px dashed var(--accent);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background .12s;
+}
+.zone-add-btn:hover { background: var(--ok-bg) }
+.zone-add-btn:active { background: var(--sunken) }
+
+.field-switcher { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px }
+.fs-label { font: 400 11px/1 var(--f); color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em }
+.fs-list { display: flex; gap: 8px; flex-wrap: wrap }
+.fs-chip { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); cursor: pointer; font: 400 14px/1.2 var(--f); color: var(--ink-1) }
+.fs-chip.on { border-color: var(--accent); background: var(--ok-bg); color: var(--accent) }
+.fs-chip:hover:not(.on) { border-color: var(--accent); }
+.fs-crop { font-size: 11px; color: var(--ink-3) }
+.fs-chip.on .fs-crop { color: var(--accent); opacity: .8 }
+
+.setup-new-field { display: flex; flex-direction: column; gap: 8px }
+.snf-hint { margin: 0; font: 400 12px/1 var(--f); color: var(--ink-3) }
+
+/* ── 매개충 페이지 ────────────────────────────── */
+.vector-content { flex: 1; overflow-y: auto; padding: 16px 16px calc(var(--nav-h) + 16px); display: flex; flex-direction: column; gap: 14px }
+.vec-banner {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.vec-banner-icon { color: var(--warn); flex: none; margin-top: 1px }
+.vec-list { display: flex; flex-direction: column; gap: 10px }
+.vec-card {
+  background: var(--sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vc-top { display: flex; align-items: center; gap: 10px }
+.vc-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--app);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: var(--ink-2);
+  flex: none;
+}
+.vc-info { flex: 1; min-width: 0 }
+.vc-name { font: 600 14.5px/1 var(--f); display: block }
+.vc-sci { font: 400 11px/1 var(--f); color: var(--ink-3); font-style: italic; display: block; margin-top: 2px }
+.vc-virus { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; background: var(--bad-bg); border-radius: 8px }
+.vc-virus-label { font: 600 10.5px/1 var(--f); color: var(--bad); text-transform: uppercase; letter-spacing: .04em }
+.vc-virus-val { font: 400 12px/1.4 var(--f); color: var(--ink) }
+.vc-months { display: flex; align-items: center; gap: 10px }
+.vc-months-label { font: 500 11.5px/1 var(--f); color: var(--ink-3); flex: none }
+.vc-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 4px; border-top: 1px dashed var(--line) }
+.vc-drugs { font: 500 12px/1 var(--f); color: var(--ink-3) }
+.vec-note { background: var(--sunken); border: 1px dashed var(--line); border-radius: var(--radius-md); padding: 12px }
+.vec-note p { margin: 0; font: 400 12px/1.6 var(--f); color: var(--ink-2) }
+
+/* ── 새 밭 등록 페이지 ────────────────────────── */
+.new-field-page .topbar { position: relative; z-index: 1 }
+.nf-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--sheet);
+  border-bottom: 1px solid var(--line);
+  flex: none;
+}
+.step-indicator { display: flex; gap: 6px; align-items: center }
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background .2s, transform .2s;
+}
+.step-dot.done { background: var(--accent-2) }
+.step-dot.active { background: var(--accent); transform: scale(1.35) }
+.nf-step-label { font: 600 12.5px/1 var(--f); color: var(--ink-2) }
+.nf-content { flex: 1; overflow-y: auto; padding: 0 16px calc(32px + var(--safe-bottom)) }
+.nf-step { padding: 20px 0; display: flex; flex-direction: column; gap: 16px; min-height: 100% }
+.nf-step-title { display: flex; align-items: center; gap: 10px }
+.nf-step-title h2 { margin: 0; font: 700 20px/1.2 var(--f); letter-spacing: -.015em }
+.nf-step-no { font: 700 16px/1 var(--f); color: var(--accent) }
+.nf-step-desc { margin: -4px 0 0; font: 400 13px/1.6 var(--f); color: var(--ink-2) }
+.nf-map-mock { background: var(--sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden }
+.nf-map-label { padding: 8px 12px; font: 600 11px/1 var(--f); color: var(--ink-3); border-bottom: 1px solid var(--line) }
+.nf-map-parcel { padding: 8px }
+.nf-confirm-btn {
+  width: 100%;
+  appearance: none;
+  cursor: pointer;
+  font: 600 13px/1 var(--f);
+  padding: 12px;
+  border: none;
+  background: var(--accent);
+  color: var(--on-accent);
+  transition: background .12s;
+}
+.nf-confirm-btn.confirmed { background: var(--ok); color: #fff }
+.nf-confirm-btn:hover { filter: brightness(1.08) }
+.nf-summary-card {
+  background: var(--sunken);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nf-sum-label { font: 500 11px/1 var(--f); color: var(--ink-3) }
+.nf-sum-val { font: 400 13px/1.4 var(--f); color: var(--ink) }
+.crop-grid { display: flex; gap: 6px; flex-wrap: wrap }
+.crop-chip {
+  appearance: none;
+  cursor: pointer;
+  font: 400 13px/1 var(--f);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--app);
+  color: var(--ink-2);
+  transition: border-color .12s, color .12s, background .12s;
+}
+.crop-chip:hover { border-color: var(--accent) }
+.crop-chip.on { border-color: var(--accent); color: var(--ink); background: var(--ok-bg) }
+.zone-count-row { display: flex; gap: 6px }
+.zone-count-btn {
+  appearance: none;
+  cursor: pointer;
+  font: 700 16px/1 var(--f);
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--app);
+  color: var(--ink-2);
+  transition: border-color .12s, color .12s, background .12s;
+}
+.zone-count-btn:hover { border-color: var(--accent) }
+.zone-count-btn.on { border-color: var(--accent); color: var(--accent); background: var(--ok-bg) }
+.zone-dates { display: flex; flex-direction: column; gap: 8px }
+.zone-date-row { display: flex; align-items: center; gap: 10px }
+.zdr-label {
+  font: 700 13px/1 var(--f);
+  color: var(--ink-2);
+  width: 40px;
+  flex: none;
+}
+.nf-final-summary {
+  background: var(--sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.nfs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.nfs-row:last-child { border-bottom: 0 }
+.nfs-row span { color: var(--ink-3) }
+.nfs-row b { font-weight: 600; color: var(--ink) }

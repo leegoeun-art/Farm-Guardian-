@@ -134,6 +134,30 @@ export default function VerdictPage() {
         <div style={{ width: 40 }} />
       </header>
 
+      {/* 구역 탭 */}
+      {field?.zones.length > 1 && (
+        <div className="zone-strip" style={{ padding: '8px 16px', flex: 'none', borderBottom: '1px solid var(--line)' }}>
+          {field.zones.map((z) => {
+            const zr = drug ? judge(z, drug, TODAY) : null;
+            const zv = zr?.state ?? 'UNKNOWN';
+            const COLOR = { GREEN: 'var(--ok)', AMBER: 'var(--warn)', RED: 'var(--bad)', UNKNOWN: 'var(--unk)', NA: 'var(--unk)' };
+            return (
+              <button
+                key={z.id}
+                className="zone-tab"
+                aria-current={z.id === state.zoneId ? 'true' : 'false'}
+                onClick={() => dispatch({ type: 'SELECT_ZONE', payload: z.id })}
+              >
+                {z.name}
+                <span className="zs" style={{ color: COLOR[zv] ?? 'var(--unk)' }}>
+                  {zv === 'GREEN' ? '가능' : zv === 'AMBER' ? '주의' : zv === 'RED' ? '불가' : zv === 'NA' ? '심을때' : '?'}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       <div className="verdict-content">
         {/* 종합 판정 */}
         <div className={`vbox ${verdict}`}>
